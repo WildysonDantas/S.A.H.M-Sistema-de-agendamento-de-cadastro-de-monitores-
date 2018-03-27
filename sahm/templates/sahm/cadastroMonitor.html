@@ -40,7 +40,7 @@
               <li><a href="#">Horários</a></li>
               <li><a href="#">Sobre</a></li>
               <li><a href="#">Contato</a></li>
-              <li><a href="login.html"><img src="{% static 'Imagens/login4.png' %}"> Entre</a></li>
+              <li><a href="{% url 'login' %}"><img src="{% static 'Imagens/login4.png' %}"> Entre</a></li>
             </ul>
           </div>
         </div>
@@ -51,64 +51,66 @@
             <div class="info">
               <h1 class="page-header"> Cadastre os Seus Dados</h1>
 
-              <form id="formCadCliente" data-toggle="validator" role="form">
+              <form id="formCadCliente" data-toggle="validator" role="form" method="POST">{% csrf_token %}
 
                 <div class="row">
                   <div class="form-group col-md-8">
                     <label for="id_nome" class="control-label">Nome:</label>
-                    <input type="text" name="nome" placeholder="Informe o seu nome completo" id="id_nome" class="form-control"/>
+                    <input type="text" name="nome" placeholder="Informe o seu nome completo" id="id_nome" class="form-control" required/>
                   </div>
 
                   <div class="form-group col-md-4">
                     <label for="id_matricula" class="control-label">Matrícula:</label>
-                    <input type="number" name="Matricula" id="id_matricula" class="form-control">
+                    <input type="number" name="matricula" id="id_matricula" class="form-control" required/>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="form-group col-md-8">
                     <label for="id_email" class="control-label">Email:</label>
-                    <input type="email" name="email" id="id_email" class="form-control"/>
+                    <input type="email" name="email" id="id_email" class="form-control" required/>
                   </div>
 
                   <div class="form-group col-md-4">
                     <label for="id_fone" class="control-label">Telefone:</label>
-                    <input type="number" name="fone" id="id_fone" class="form-control" placeholder="DDD+Número"/>
+                    <input type="number" name="telefone" id="id_fone" class="form-control" placeholder="DDD+Número" required/>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="form-group col-md-6">
                     <label for="id_curso" class="control-label">Curso:</label>
-                    <input type="text" name="curso" id="id_curso" class="form-control"/>
+                    <input type="text" name="curso" id="id_curso" class="form-control" required/>
                   </div>
 
                   <div class="form-group col-md-2">
                     <label for="id_periodo" class="control-label">Período:</label>
-                    <input type="text" name="Periodo" id="id_periodo" class="form-control"/>
+                    <input type="number" name="periodo" id="id_periodo" class="form-control" min="1" max="12" required/>
                   </div>
 
                   <div class="form-group col-md-4">
                     <label for="id_nascimento" class="control-label">Data de Nascimento:</label>
-                    <input type="date" name="nascimento" id="id_nascimento" class="form-control"/>
+                    <input type="date" name="nascimento" id="id_nascimento" class="form-control" required/>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="form-group col-md-6">
                     <label for="id_senha" class="control-label">Senha:</label>
-                    <input type="password" name="senha" id="id_senha" class="form-control"/>
+                    <input type="password" name="senha" id="id_senha" class="form-control" required/>
                   </div>
 
                   <div class="form-group col-md-6">
                     <label for="id_conf_senha" class="control-label">Confirme a Senha:</label>
-                    <input type="password" name="confirmaSenha" id="id_conf_senha" class="form-control"/>
+                    <input type="password" name="confirmaSenha" id="id_conf_senha" class="form-control" required/>
                   </div>
                 </div>
 
                 <div class="row" id="actions">
-                  <button type="submit" class="btn btn-primary">Cadastrar</button>
-                  <a href="index.html" class="btn btn-default">Cancelar</a>
+                  {% if data.senha == data.confirmaSenha %}
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                  {% endif %}
+                  <a href="{% url 'login' %}" class="btn btn-default">Cancelar</a>
                 </div>
 
               </form>
@@ -117,7 +119,6 @@
         </div>
 
       <footer class="row">
-
       </footer>
     </div>
 
