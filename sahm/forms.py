@@ -5,4 +5,4 @@ class MonitorForm(forms.ModelForm):
 
     class Meta:
         model = Monitor
-        fields = ('nome', 'matricula', 'email', 'telefone', 'curso', 'periodo', 'nascimento')
+        fields = ('nome', 'matricula', 'email', 'telefone', 'curso', 'nascimento')

@@ -9,7 +9,6 @@ class Monitor(models.Model):
     email = models.EmailField()
     telefone = models.BigIntegerField()
     curso = models.CharField(max_length=200)
-    periodo = models.PositiveSmallIntegerField()
     nascimento = models.DateField()
     senha = models.CharField(max_length=200)
 
