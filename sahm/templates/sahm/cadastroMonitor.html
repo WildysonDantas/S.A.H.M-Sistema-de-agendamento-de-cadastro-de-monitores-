@@ -57,11 +57,13 @@
                   <div class="form-group col-md-8">
                     <label for="id_nome" class="control-label">Nome:</label>
                     <input type="text" name="nome" placeholder="Informe o seu nome completo" id="id_nome" class="form-control" required/>
+                    <div class="help-block with-errors"></div>
                   </div>
 
                   <div class="form-group col-md-4">
                     <label for="id_matricula" class="control-label">Matrícula:</label>
                     <input type="number" name="matricula" id="id_matricula" class="form-control" required/>
+                    <div class="help-block with-errors"></div>
                   </div>
                 </div>
 
@@ -79,10 +81,31 @@
                   </div>
                 </div>
 
+
+
                 <div class="row">
+
+
+
                   <div class="form-group col-md-8">
-                    <label for="id_curso" class="control-label">Curso:</label>
-                    <input type="text" name="curso" id="id_curso" class="form-control" required/>
+
+                      <label  for="id_curso" class="control-label">Curso:</label>
+                    <!--  <input type="text" name="curso" id="id_curso" class="form-control" required/>-->
+                        <div>
+                          <select name="curso" style="width: 380px" id="select_curso">
+                            <option value="1">CSHNB - ADMINISTRAÇÃO</option>
+                            <option value="2">CSHNB - CIÊNCIAS BIOLÓGICAS</option>
+                            <option value="3">CSHNB - ENFERMAGEM</option>
+                            <option value="4">CSHNB - HISTÓRIA</option>
+                            <option value="5">CSHNB - LETRAS</option>
+                            <option value="6">CSHNB - MATEMÁTICA</option>
+                            <option value="7">CSHNB - MEDICINA</option>
+                            <option value="8">CSHNB - NUTRIÇÃO</option>
+                            <option value="9">CSHNB - PEDAGOGIA</option>
+                            <option value="10">CSHNB - SISTEMAS DE INFORMAÇÃO</option>
+                          </select>
+
+                      </div>
                     <div class="help-block with-errors"></div>
                   </div>
 
@@ -96,8 +119,8 @@
                 <div class="row">
                   <div class="form-group col-md-6">
                     <label for="id_senha" class="control-label">Senha:</label>
-                    <input type="password" name="senha" id="id_senha" class="form-control" data-minlength="6" placeholder="Mínimo de seis (6) digitos" required/>
-                     <span class="help-block with-errors"></span>
+                    <input type="password" name="senha" id="id_senha" class="form-control" data-minlength="6" required/>
+                     <span class="help-block">Mínimo de seis (6) digitos</span>
                   </div>
 
                   <div class="form-group col-md-6">
@@ -107,10 +130,13 @@
                   </div>
                 </div>
 
-                <div class="row3" id="actions">
-                  <button type="submit" class="btn btn-primary">Cadastrar</button>
+                <div class="row" id="actions">
+                  {% if data.senha == data.confirmaSenha %}
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                  {% endif %}
                   <a href="{% url 'login' %}" class="btn btn-default">Cancelar</a>
                 </div>
+
               </form>
             </div>
           </div>
@@ -124,5 +150,7 @@
   	<script src="{% static 'js/jquery.min.js' %}"></script>
   	<script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/validator.js' %}"></script>
+    <script src="{% static 'js/curso.js' %}"></script>
+
   </body>
 </html>
