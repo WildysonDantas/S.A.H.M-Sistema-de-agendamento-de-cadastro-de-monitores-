@@ -1,13 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Monitor
-from .forms import MonitorForm
+from .forms import MonitorModelForm
 # Create your views here.
 
 def cadastrar_monitor(request):
 
     data = {}
+    form = MonitorModelForm(request.POST or None)
+    context = {'form':form}
     if request.method == "POST":
-        data['nome'] = request.POST.get('nome', 'nome não encontrado')
+        if form.is_valid():
+            form.save()
+            return render(request, 'sahm/viewMonitor.html', context)
+        """data['nome'] = request.POST.get('nome', 'nome não encontrado')
         data['matricula'] = request.POST.get('matricula', 'matricula não encontrada')
         data['email'] = request.POST.get('email', 'email não encontrado')
         data['telefone'] = request.POST.get('telefone', 'telefone não encontrado')
@@ -20,10 +25,10 @@ def cadastrar_monitor(request):
             monitor = Monitor.objects.create(nome=data['nome'], matricula=data['matricula'], email=data['email'],
             telefone=data['telefone'], curso=data['curso'], nascimento=data['nascimento'],
             senha=data['senha'])
-            return render(request, 'sahm/viewMonitor.html', {'monitor' : monitor})
+            return render(request, 'sahm/viewMonitor.html', {'monitor' : monitor})"""
 
 
-    return render(request, 'sahm/cadastroMonitor.html', data)
+    return render(request, 'sahm/cadastroMonitor.html', context)
 
 def login(request):
     return render(request, 'sahm/login.html', {})

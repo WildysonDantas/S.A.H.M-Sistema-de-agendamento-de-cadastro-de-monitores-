@@ -1,156 +1,79 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <title>Cadastro</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style></style>
+{% extends 'base.html' %}
 
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+{% block content %}
+<h1 class="page-header"> Cadastre os Seus Dados</h1>
 
+<form id="formCadCliente" data-toggle="validator" role="form" method="POST" action="{% url 'sahm:cadastrar_monitor' %}">{% csrf_token %}
 
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-  </head>
-  <body>
-     <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-          <div class="navbar-header">
-
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapsed" data-target="#navbar">
-
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">S.A.H.M</a>
-          </div>
-
-          <div id="navbar" class="navbar-collapse collapsed">
-            <ul class="nav navbar-nav navbar-right">
-
-              <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
-              <li><a href="#">Horários</a></li>
-              <li><a href="#">Sobre</a></li>
-              <li><a href="#">Contato</a></li>
-              <li><a href="{% url 'login' %}"><img src="{% static 'Imagens/login4.png' %}"> Entre</a></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <div class="container">
-        <div class="row">
-          <div role="main">
-            <div class="info">
-              <h1 class="page-header"> Cadastre os Seus Dados</h1>
-
-              <form id="formCadCliente" data-toggle="validator" role="form" method="POST">{% csrf_token %}
-
-                <div class="row">
-                  <div class="form-group col-md-8">
-                    <label for="id_nome" class="control-label">Nome:</label>
-                    <input type="text" name="nome" placeholder="Informe o seu nome completo" id="id_nome" class="form-control" required/>
-                    <div class="help-block with-errors"></div>
-                  </div>
-
-                  <div class="form-group col-md-4">
-                    <label for="id_matricula" class="control-label">Matrícula:</label>
-                    <input type="number" name="matricula" id="id_matricula" class="form-control" required/>
-                    <div class="help-block with-errors"></div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="form-group col-md-8">
-                    <label for="id_email" class="control-label">Email:</label>
-                    <input type="email" name="email" id="id_email" class="form-control" data-error="Por favor, informe um e-mail correto." required/>
-                    <div class="help-block with-errors"></div>
-                  </div>
-
-                  <div class="form-group col-md-4">
-                    <label for="id_fone" class="control-label">Telefone:</label>
-                    <input type="number" name="telefone" id="id_fone" class="form-control" placeholder="DDD+Número" required/>
-                    <div class="help-block with-errors"></div>
-                  </div>
-                </div>
-
-
-
-                <div class="row">
-
-
-
-                  <div class="form-group col-md-8">
-
-                      <label  for="id_curso" class="control-label">Curso:</label>
-                    <!--  <input type="text" name="curso" id="id_curso" class="form-control" required/>-->
-                        <div>
-                          <select name="curso" style="width: 380px" id="select_curso">
-                            <option value="1">CSHNB - ADMINISTRAÇÃO</option>
-                            <option value="2">CSHNB - CIÊNCIAS BIOLÓGICAS</option>
-                            <option value="3">CSHNB - ENFERMAGEM</option>
-                            <option value="4">CSHNB - HISTÓRIA</option>
-                            <option value="5">CSHNB - LETRAS</option>
-                            <option value="6">CSHNB - MATEMÁTICA</option>
-                            <option value="7">CSHNB - MEDICINA</option>
-                            <option value="8">CSHNB - NUTRIÇÃO</option>
-                            <option value="9">CSHNB - PEDAGOGIA</option>
-                            <option value="10">CSHNB - SISTEMAS DE INFORMAÇÃO</option>
-                          </select>
-
-                      </div>
-                    <div class="help-block with-errors"></div>
-                  </div>
-
-                  <div class="form-group col-md-4">
-                    <label for="id_nascimento" class="control-label">Data de Nascimento:</label>
-                    <input type="date" name="nascimento" id="id_nascimento" class="form-control" required/>
-                    <div class="help-block with-errors"></div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="form-group col-md-6">
-                    <label for="id_senha" class="control-label">Senha:</label>
-                    <input type="password" name="senha" id="id_senha" class="form-control" data-minlength="6" required/>
-                     <span class="help-block">Mínimo de seis (6) digitos</span>
-                  </div>
-
-                  <div class="form-group col-md-6">
-                    <label for="id_conf_senha" class="control-label">Confirme a Senha:</label>
-                    <input type="password" name="confirmaSenha" id="id_conf_senha" class="form-control" data-match="#id_senha" data-match-error="As senhas não conferem!." required/>
-                    <div class="help-block with-errors"></div>
-                  </div>
-                </div>
-
-                <div class="row" id="actions">
-                  {% if data.senha == data.confirmaSenha %}
-                    <button type="submit" class="btn btn-primary">Cadastrar</button>
-                  {% endif %}
-                  <a href="{% url 'login' %}" class="btn btn-default">Cancelar</a>
-                </div>
-
-              </form>
-            </div>
-          </div>
-        </div>
-
-      <footer class="row">
-      </footer>
+  <div class="row">
+    <div class="form-group col-md-8">
+      <label for="id_nome" class="control-label">Nome:</label>
+      <!--<input type="text" name="nome" placeholder="Informe o seu nome completo" id="id_nome" class="form-control" required/>-->
+      {{form.nome}}
+      <div class="help-block with-errors"></div>
     </div>
 
+    <div class="form-group col-md-4">
+      <label for="id_matricula" class="control-label">Matrícula:</label>
+      <!--<input type="number" name="matricula" id="id_matricula" class="form-control" required/>-->
+      {{form.matricula}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
 
-  	<script src="{% static 'js/jquery.min.js' %}"></script>
-  	<script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/validator.js' %}"></script>
-    <script src="{% static 'js/curso.js' %}"></script>
+  <div class="row">
+    <div class="form-group col-md-8">
+      <label for="id_email" class="control-label">Email:</label>
+      <!--<input type="email" name="email" id="id_email" class="form-control" data-error="Por favor, informe um e-mail correto." required/>-->
+      {{form.email}}
+      <div class="help-block with-errors"></div>
+    </div>
 
-  </body>
-</html>
+    <div class="form-group col-md-4">
+      <label for="id_fone" class="control-label">Telefone:</label>
+      <!--<input type="number" name="telefone" id="id_fone" class="form-control" placeholder="DDD+Número" required/>-->
+      {{form.telefone}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-8">
+        <label  for="id_curso" class="control-label">Curso:</label>
+      <!--  <input type="text" name="curso" id="id_curso" class="form-control" required/>-->
+        {{form.curso}}
+        <div class="help-block with-errors"></div>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="id_nascimento" class="control-label">Data de Nascimento:</label>
+      <!--<input type="date" name="nascimento" id="id_nascimento" class="form-control" required/>-->
+      {{form.nascimento}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label for="id_senha" class="control-label">Senha:</label>
+      <!--<input type="password" name="senha" id="id_senha" class="form-control" data-minlength="6" required/>-->
+      {{form.senha}}
+      <span class="help-block">Mínimo de seis (6) digitos</span>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="id_conf_senha" class="control-label">Confirme a Senha:</label>
+      <input type="password" name="confirmaSenha" id="id_conf_senha" class="form-control" data-match="#id_senha" data-match-error="As senhas não conferem!." required/>
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
+
+  <div class="row" id="actions">
+    {% if data.senha == data.confirmaSenha %}
+      <button type="submit" class="btn btn-primary">Cadastrar</button>
+    {% endif %}
+    <a href="{% url 'sahm:login' %}" class="btn btn-default">Cancelar</a>
+  </div>
+
+</form>
+{% endblock %}
