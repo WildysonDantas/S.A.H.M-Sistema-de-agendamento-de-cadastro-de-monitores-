@@ -9,14 +9,14 @@
     <div class="form-group col-md-8">
       <label for="id_nome" class="control-label">Nome:</label>
       <!--<input type="text" name="nome" placeholder="Informe o seu nome completo" id="id_nome" class="form-control" required/>-->
-      {{form.nome}}
+      {{form.first_name}}
       <div class="help-block with-errors"></div>
     </div>
 
     <div class="form-group col-md-4">
       <label for="id_matricula" class="control-label">Matrícula:</label>
       <!--<input type="number" name="matricula" id="id_matricula" class="form-control" required/>-->
-      {{form.matricula}}
+      {{form.username}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -32,7 +32,7 @@
     <div class="form-group col-md-4">
       <label for="id_fone" class="control-label">Telefone:</label>
       <!--<input type="number" name="telefone" id="id_fone" class="form-control" placeholder="DDD+Número" required/>-->
-      {{form.telefone}}
+      {{form_monitor.telefone}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -41,14 +41,14 @@
     <div class="form-group col-md-8">
         <label  for="id_curso" class="control-label">Curso:</label>
       <!--  <input type="text" name="curso" id="id_curso" class="form-control" required/>-->
-        {{form.curso}}
+        {{form_monitor.curso}}
         <div class="help-block with-errors"></div>
     </div>
 
     <div class="form-group col-md-4">
       <label for="id_nascimento" class="control-label">Data de Nascimento:</label>
       <!--<input type="date" name="nascimento" id="id_nascimento" class="form-control" required/>-->
-      {{form.nascimento}}
+      {{form_monitor.nascimento}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -57,7 +57,7 @@
     <div class="form-group col-md-6">
       <label for="id_senha" class="control-label">Senha:</label>
       <!--<input type="password" name="senha" id="id_senha" class="form-control" data-minlength="6" required/>-->
-      {{form.senha}}
+      {{form.password}}
       <span class="help-block">Mínimo de seis (6) digitos</span>
     </div>
 
@@ -69,9 +69,7 @@
   </div>
 
   <div class="row" id="actions">
-    {% if data.senha == data.confirmaSenha %}
-      <button type="submit" class="btn btn-primary">Cadastrar</button>
-    {% endif %}
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
     <a href="{% url 'sahm:login' %}" class="btn btn-default">Cancelar</a>
   </div>
 

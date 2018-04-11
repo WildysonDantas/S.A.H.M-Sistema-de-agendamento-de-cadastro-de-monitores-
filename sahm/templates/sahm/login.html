@@ -7,22 +7,27 @@
 <img src="{% static 'Imagens/images.png' %}"  alt="Logo De Identificacao">
 <h1 class="page-header">Informe Suas Credenciais</h1>
 
-<form id="formLogin" data-toggle="validator" role="form" method="POST">{% csrf_token %}
+<form id="formLogin" data-toggle="validator" role="form" action="{% url 'sahm:login' %}" method="POST">{% csrf_token %}
   <div class="form-group">
     <label for="id_login" class="control-label">Email: </label>
-    <input type="email" name="login" placeholder="Informe o seu email" id="id_login" class="form-control">
+    <input type="text" name="email" placeholder="Informe o seu email" id="id_login" class="form-control" required>
+    <!--{{form.email}}-->
+    <div class="help-block with-errors"></div>
+
   </div>
 
   <div class="form-group">
     <label for="id_senha" class="control-label">Senha: </label>
-    <input type="password" name="senha" id="id_senha" class="form-control">
+    <input type="password" name="password" id="id_senha" class="form-control" required>
+    <!--{{form.password}}-->
+    <div class="help-block with-errors"></div>
   </div>
 
   <button type="submit" class="btn btn-primary">Acessar</button>
 </form>
 
 <div class="row2">
-  <a href="{% url 'sahm:cadastrar_monitor'%}">Não sou cadastrado</a>
+  <a href="{% url 'sahm:cadastrar_monitor' %}">Não sou cadastrado</a>
 </div>
 
 {% endblock %}
