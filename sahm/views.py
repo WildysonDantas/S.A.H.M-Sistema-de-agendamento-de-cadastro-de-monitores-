@@ -35,7 +35,7 @@ def cadastrar_monitor(request):
 
                 user.save()
                 form_monitor.save()
-                return render(request, 'sahm/viewMonitor.html', context)
+                return HttpResponseRedirect('/acesso', context)
 
     return render(request, 'sahm/cadastroMonitor.html', context)
 
