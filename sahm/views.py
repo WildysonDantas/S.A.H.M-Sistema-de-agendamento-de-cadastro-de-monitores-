@@ -34,23 +34,23 @@ def cadastrar_monitor(request):
                 user.set_password(password)
 
                 user.save()
-                form_monitor.save()
-                return render(request, 'sahm/viewMonitor.html', context)
+                return redirect('/acesso', context)
 
     return render(request, 'sahm/cadastroMonitor.html', context)
 
 def monitor_login(request):
 
     if request.method == "POST":
+        
         monitor_consulta = User.objects.get(email=request.POST.get('email'))
         monitor = authenticate(username=monitor_consulta.username, password=request.POST.get('password'))
 
         if monitor is not None:
             if monitor.is_active:
                 login(request, monitor)
-                return HttpResponseRedirect('/acesso')
+                return HttpResponseRedirect('/acesso', {'monitor':monitor_consulta})
         else:
-            return HttpResponseRedirect('/cadastro')
+            return HttpResponseRedirect('/login')
 
     return render(request, 'sahm/login.html')
 
@@ -61,4 +61,29 @@ def monitor_logout(request):
 
 @login_required
 def acesso_monitor(request):
-    return render(request, 'sahm/viewMonitor.html')
+    return render(request, 'viewMonitor.html')
+
+@login_required
+def dados_cadastrais_monitor(request):
+
+    user = User.objects.get(username= request.user.username)
+    form = UserModelForm(request.POST or None, initial={'first_name':user.first_name, 'username':user.username})
+    form_monitor = MonitorModelForm(request.POST or None, initial={'telefone': user.monitor.telefone, 'nascimento':user.monitor.nascimento,'curso': user.monitor.curso})
+    context = {'form_monitor':form_monitor, 'form':form}
+
+    if request.method == "POST":
+        if form_monitor.is_valid() and form.is_valid():
+            if request.user.is_authenticated:
+
+                #user.first_name = form.cleaned_data['first_name']
+                #user.username = form.cleaned_data['username']
+                user.monitor.telefone = form_monitor.cleaned_data.get('telefone')
+                user.monitor.nascimento = form_monitor.cleaned_data.get('nascimento')
+                user.monitor.curso = form_monitor.cleaned_data.get('curso')
+                user.save()
+
+            else:
+                return redirect('/acesso')
+
+
+    return render(request, 'sahm/updateMonitor.html', context)

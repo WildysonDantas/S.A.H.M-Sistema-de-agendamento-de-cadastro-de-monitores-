@@ -1,0 +1,56 @@
+{% extends 'viewMonitor.html' %}
+
+{% block content %}
+
+<!--<div class="info">
+  <h1 class="page-header">Alterar Cadastro do Monitor</h1>
+</div>-->
+
+<form id="formCadCliente" data-toggle="validator" role="form" method="POST" action="{% url 'sahm:dados_cadastrais_monitor' %}">{% csrf_token %}
+
+  <!--<div class="row">
+    <div class="form-group col-md-5">
+      <label for="id_nome" class="control-label">Nome:</label>
+      {{form.first_name}}
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <div class="form-group col-md-3">
+      <label for="id_matricula" class="control-label">Matricula:</label>
+      {{form.username}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>-->
+
+  <div class="row">
+    <div class="form-group col-md-4">
+      <label for="id_fone" class="control-label">Telefone:</label>
+      <!--<input type="number" name="telefone" id="id_fone" class="form-control" placeholder="DDD+Número" required/>-->
+      {{form_monitor.telefone}}
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="id_nascimento" class="control-label">Data de Nascimento:</label>
+      <!--<input type="date" name="nascimento" id="id_nascimento" class="form-control" required/>-->
+      {{form_monitor.nascimento}}
+      <div class="help-block with-errors"></div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-8">
+        <label  for="id_curso" class="control-label">Curso:</label>
+      <!--  <input type="text" name="curso" id="id_curso" class="form-control" required/>-->
+        {{form_monitor.curso}}
+        <div class="help-block with-errors"></div>
+    </div>
+  </div>
+
+  <div class="row" id="actions">
+    <button type="submit" class="btn btn-primary">Alterar</button>
+    <a href="{% url 'sahm:acesso_monitor' %}" class="btn btn-default">Cancelar</a>
+  </div>
+</form>
+{% endblock %}

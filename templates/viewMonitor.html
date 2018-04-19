@@ -37,17 +37,14 @@
             <ul class="nav navbar-nav navbar-right">
 
               <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
-              <li><a href="#">Pacotes</a></li>
-              <li><a href="#">Pontos Turisticos</a></li>
-              <li><a href="#">Galeria</a></li>
+              <li><a href="#">Horários</a></li>
               <li><a href="#">Sobre</a></li>
               <li><a href="#">Contato</a></li>
-              <li><a href="{% url 'sahm:login' %}"><img src="{% static 'Imagens/login4.png' %}"> Entre</a></li>
+              <li><a href="{% url 'sahm:logout' %}"><img src="{% static 'Imagens/login4.png' %}"> Entre</a></li>
             </ul>
           </div>
         </div>
       </nav>
-
 
       <div class="container-fluid">
         <div class="row">
@@ -64,8 +61,8 @@
                     <div id="navbar" class="navbar-collapse collapsed">
                       <ul class="nav">
                         <li><img src="{% static 'Imagens/images.png' %}"  alt="Logo Da Conta"/></li>
-                        <li><a href="#">Inicio</a></li>
-                        <li><a href="#">Informações Cadastrais</a></li>
+                        <li><a href="{% url 'sahm:acesso_monitor' %}">Inicio</a></li>
+                        <li><a href="{% url 'sahm:dados_cadastrais_monitor' %}">Informações Cadastrais</a></li>
                         <li><a href="#">Configurações</a></li>
                         <li><a href="{% url 'sahm:logout' %}">Sair</a></li>
                       </ul>
@@ -75,8 +72,16 @@
 
                 <div class="col-md-9">
 
-                  <form id="formCad" data-toggle="validator" role="form" method="POST">{% csrf_token %}
-                    <input type="file" name="anexo">
+                  <form id="formCad" data-toggle="validator" role="form" method="POST">
+                    {% csrf_token %}
+                    <!--<input type="file" name="anexo">-->
+                      <!--{{ user.get_username }}-->
+                      Matricula: {{user.username}} </br>
+                      Nome Completo: {{user.first_name}} <br>
+                      Email: {{user.email}}</br>
+                      Telefone: {{user.monitor.telefone}}</br></br></br></br>
+                      {% block content %}
+                      {% endblock %}
                   </form>
                 </div>
 

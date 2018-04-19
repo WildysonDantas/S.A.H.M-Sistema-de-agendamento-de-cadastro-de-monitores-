@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^cadastro/$', views.cadastrar_monitor, name='cadastrar_monitor'),
     url(r'^acesso/$', views.acesso_monitor, name="acesso_monitor"),
     url(r'^logout/$', views.monitor_logout, name="logout"),
+    url(r'^dados_cadastrais_monitor/$', views.dados_cadastrais_monitor, name='dados_cadastrais_monitor'),
 ]
