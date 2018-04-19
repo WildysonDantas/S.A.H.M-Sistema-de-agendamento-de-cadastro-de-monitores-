@@ -34,7 +34,12 @@ def cadastrar_monitor(request):
                 user.set_password(password)
 
                 user.save()
+<<<<<<< HEAD
                 return redirect('/acesso', context)
+=======
+                form_monitor.save()
+                return HttpResponseRedirect('/acesso', context)
+>>>>>>> 8a6a54a83c3017376e83b3f513d483e4d3be19cd
 
     return render(request, 'sahm/cadastroMonitor.html', context)
 
