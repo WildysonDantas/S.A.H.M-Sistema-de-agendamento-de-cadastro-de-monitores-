@@ -8,4 +8,6 @@ urlpatterns = [
     url(r'^acesso/$', views.acesso_monitor, name="acesso_monitor"),
     url(r'^logout/$', views.monitor_logout, name="logout"),
     url(r'^dados_cadastrais_monitor/$', views.dados_cadastrais_monitor, name='dados_cadastrais_monitor'),
+    url(r'^dados_principal_monitor/$', views.dados_principal_monitor, name='dados_principal_monitor'),
+    url(r'^mudar_senha/$', views.update_password, name='update_password'),
 ]

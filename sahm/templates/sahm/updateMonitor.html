@@ -8,19 +8,13 @@
 
 <form id="formCadCliente" data-toggle="validator" role="form" method="POST" action="{% url 'sahm:dados_cadastrais_monitor' %}">{% csrf_token %}
 
-  <!--<div class="row">
-    <div class="form-group col-md-5">
-      <label for="id_nome" class="control-label">Nome:</label>
-      {{form.first_name}}
+  <div class="row">
+    <div class="form-group col-md-8">
+      <label for="id_nome" class="control-label">Novo Nome:</label>
+      <input type="text" name="nome" placeholder="Informe o seu nome completo" id="id_nome" class="form-control"/>
       <div class="help-block with-errors"></div>
     </div>
-
-    <div class="form-group col-md-3">
-      <label for="id_matricula" class="control-label">Matricula:</label>
-      {{form.username}}
-      <div class="help-block with-errors"></div>
-    </div>
-  </div>-->
+  </div>
 
   <div class="row">
     <div class="form-group col-md-4">
