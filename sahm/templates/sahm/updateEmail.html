@@ -1,0 +1,35 @@
+{% extends 'viewMonitor.html' %}
+
+{% block content %}
+
+
+<form id="formUpdatePass" data-toggle="validator" role="form" method="POST" action="{% url 'sahm:update_email' %}">{% csrf_token %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="form-group col-md-4">
+      <label class="control-label">Email antigo:</label>
+      {{user.email}}
+    </div>
+
+    <div class="form_group col-md-4">
+      <label for="id_email" class="control-label">Email novo:</label>
+      <input type="email" name="email" id="id_email" class="form-control" data-error="Por favor, informe um e-mail correto." required/>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="form_group col-md-5">
+      <label for="id_senha" class="control-label">Informe a sua Senha:</label>
+      <input type="password" name="password" id="id_senha" class="form-control" data-minlength="6" required/>
+    </div>
+  </div>
+
+  <div class="row" id="actions">
+    <button type="submit" class="btn btn-primary">Alterar Email</button>
+    <a href="{% url 'sahm:dados_principal_monitor' %}" class="btn btn-default">Cancelar</a>
+  </div>
+</div>
+</form>
+{% endblock %}

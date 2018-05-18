@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Monitor
 from .forms import UserModelForm
 from .forms import MonitorModelForm
+#from .forms import EmailUpdateModelForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -10,6 +11,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
+#from django.contrib.auth.hashers
 
 
 # Create your views here.
@@ -131,3 +133,28 @@ def update_password(request):
     else:
         form = PasswordChangeForm(request.user)
         return render(request, 'sahm/updatePassword.html', {'form': form})
+
+@login_required
+def update_email(request):
+
+    user = User.objects.get(username= request.user.username)
+    context = {'user':user}
+
+    if request.method == "POST":
+        if user.check_password(request.POST['password']):
+            user.email = request.POST['email']
+            user.save()
+            return render(request, 'sahm/updateEmail.html', context)
+        else:
+            return redirect('/acesso')
+
+
+    return render(request, 'sahm/updateEmail.html', context)
+
+@login_required
+def excluir_conta(request):
+
+    User.objects.get(username= request.user.username).delete()
+    messages.success(request, "The user is deleted")
+    logout(request)
+    return render(request, 'sahm/login.html', {})

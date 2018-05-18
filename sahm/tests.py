@@ -8,7 +8,8 @@ class CadastrarMonitorTest(TestCase):
         self.user = User.objects.create(first_name='Paulo Henrique', username='20159022998', email='paulo@gmail.com', password='admin1')
 
     def test_first_name_vazio(self):
-        self.assertNotEqual(self.user.first_name, "")
+        self.user.first_name = ""
+        self.assertFalse(self.user.first_name)
 
     def test_username_vazio(self):
         self.assertNotEqual(self.user.username, "")
@@ -39,8 +40,3 @@ class CadastrarMonitorTest(TestCase):
         data = {'first_name': 'Paulo', 'username': '20159024998', 'email': 'paulo@outlook.com', 'password': 'admin1234'}
         response = self.client.post('/cadastro/', data)
         self.assertNotEqual(data.first_name, "")"""
-
-
-
-
-

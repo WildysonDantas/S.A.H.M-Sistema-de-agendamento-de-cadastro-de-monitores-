@@ -27,3 +27,11 @@ class MonitorModelForm(forms.ModelForm):
             ('6','CSHNB - MATEMÁTICA'),('7','CSHNB - MEDICINA'),('8','CSHNB - NUTRIÇÃO'), ('9','CSHNB - PEDAGOGIA'), ('10','CSHNB - SISTEMAS DE INFORMAÇÃO'))),
             'nascimento':forms.DateInput(attrs={'type':'date','name':'nascimento', 'id':'id_nascimento', 'class':'form-control'}),
         }
+
+#class EmailUpdateModelForm(forms.ModelForm):
+#    class Meta:
+#        model = User
+#        fields = ('email')
+#        widgets = {
+#            'email':forms.EmailInput(attrs={'name':'email', 'id':'id_email', 'class':'form-control', 'data-error':'Por favor, informe um e-mail correto.', 'required':True}),
+#        }
