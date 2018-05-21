@@ -16,6 +16,18 @@ from django.contrib import messages
 
 # Create your views here.
 
+def tela_inicial(request):
+    return render(request, 'index.html')
+
+def sobre(request):
+    return render(request, 'sobre.html')
+
+def horario(request):
+    return render(request, 'funcionamento.html')
+
+def contato(request):
+    return render(request, 'contato.html')
+
 def cadastrar_monitor(request):
 
     form = UserModelForm(request.POST or None)

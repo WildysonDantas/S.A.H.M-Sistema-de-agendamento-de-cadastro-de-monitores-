@@ -3,6 +3,10 @@ from . import views
 
 app_name = 'sahm'
 urlpatterns = [
+    url(r'^$', views.tela_inicial, name='index'),
+    url(r'^sobre/$', views.sobre, name='sobre'),
+    url(r'^como_funciona/$', views.horario, name='horario'),
+    url(r'^contate-nos/$', views.contato, name='contato'),
     url(r'^login/$', views.monitor_login, name='login'),
     url(r'^cadastro/$', views.cadastrar_monitor, name='cadastrar_monitor'),
     url(r'^acesso/$', views.acesso_monitor, name="acesso_monitor"),

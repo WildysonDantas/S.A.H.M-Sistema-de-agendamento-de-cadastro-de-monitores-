@@ -31,11 +31,12 @@
 div[role="main"] {
  background-color: #fff;
 }
-div[role="main"], aside {
- height: 650px;
+/*div[role="main"], aside {
+ height: 1050px;
 }
 
 .info {
 	width: 50%;
 	margin-left: 25%;
 }
+*/
