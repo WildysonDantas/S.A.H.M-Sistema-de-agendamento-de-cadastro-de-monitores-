@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <form method="POST" action="" role="form" name="cad" onsubmit="return validar()">{% csrf_token %}
+
+            <h3>Formulário de Contato</h3>
+  					<div class="row">
+              <div class="form-group col-md-12">
+    					  <label for="nome" class="control-label">Nome: </label>
+    						<input id="nome" type="text" name="nome" placeholder="Informe o seu nome completo" class="form-control" required=""/>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-12">
+                <label for="email" class="control-label">E-mail: </label>
+    						<input type="email" name="Email" id="email" placeholder="Informe o seu email" class="form-control" required=""/>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-12">
+  						  <label for="data" class="control-label">Data de Nascimento: </label>
+  						  <input type="text" name="data" id="data" placeholder="dd/mm/aaaa" class="form-control" required=""/>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-12">
+  					    <label for="msg" class="control-label">Mensagem: </label>
+  						  <textarea class="form-control" name="mensagem" id="msg" cols="80" rows="8" placeholder="Escreva aqui sua mensagem" required=""></textarea>
+              </div>
+            </div>
+
+            <div class="row" id="actions">
+              <input type="submit" placeholder="Enviar mensagem" class="btn btn-default">
+  						<input type="reset" value="Limpar dados" class="btn btn-default">
+            </div>
+  </form>
+
+{% endblock %}
