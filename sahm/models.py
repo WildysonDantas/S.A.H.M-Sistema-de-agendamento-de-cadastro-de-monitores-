@@ -7,7 +7,7 @@ from django.dispatch import receiver
 # Create your models here.
 
 class Monitor(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, unique=True)
     #nome = models.CharField(max_length=250)
     #matricula = models.BigIntegerField()
     #email = models.EmailField()

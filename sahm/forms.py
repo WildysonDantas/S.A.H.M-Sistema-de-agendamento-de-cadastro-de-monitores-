@@ -22,8 +22,16 @@ class MonitorModelForm(forms.ModelForm):
         model = Monitor
         fields = ('telefone', 'curso', 'nascimento')
         widgets = {
-            'telefone':forms.NumberInput(attrs={'name':'telefone', 'id':'id_fone', 'class':'form-control', 'placeholder':'DDD+Número', 'required':True}),
-            'curso':forms.Select(attrs={'name':'curso', 'class':'selectpicker form-control','id':'select_curso','required':True}, choices=(('1','CSHNB - ADMINISTRAÇÃO'), ('2','CSHNB - CIÊNCIAS BIOLÓGICAS'),('3','CSHNB - ENFERMAGEM'),('4', 'CSHNB - HISTÓRIA'), ('5', 'CSHNB - LETRAS'),
+            'telefone':forms.NumberInput(attrs={'name':'telefone', 'id':'id_fone', 'class':'form-control', 'placeholder':'DDD+Número'}),
+            'curso':forms.Select(attrs={'name':'curso', 'class':'selectpicker form-control','id':'select_curso'}, choices=(('1','CSHNB - ADMINISTRAÇÃO'), ('2','CSHNB - CIÊNCIAS BIOLÓGICAS'),('3','CSHNB - ENFERMAGEM'),('4', 'CSHNB - HISTÓRIA'), ('5', 'CSHNB - LETRAS'),
             ('6','CSHNB - MATEMÁTICA'),('7','CSHNB - MEDICINA'),('8','CSHNB - NUTRIÇÃO'), ('9','CSHNB - PEDAGOGIA'), ('10','CSHNB - SISTEMAS DE INFORMAÇÃO'))),
-            'nascimento':forms.DateInput(attrs={'type':'date','name':'nascimento', 'id':'id_nascimento', 'class':'form-control', 'required':True}),
+            'nascimento':forms.DateInput(attrs={'type':'date','name':'nascimento', 'id':'id_nascimento', 'class':'form-control'}),
         }
+
+#class EmailUpdateModelForm(forms.ModelForm):
+#    class Meta:
+#        model = User
+#        fields = ('email')
+#        widgets = {
+#            'email':forms.EmailInput(attrs={'name':'email', 'id':'id_email', 'class':'form-control', 'data-error':'Por favor, informe um e-mail correto.', 'required':True}),
+#        }

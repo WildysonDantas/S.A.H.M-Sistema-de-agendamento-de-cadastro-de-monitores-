@@ -1,0 +1,24 @@
+{% extends 'viewMonitor.html' %}
+
+{% block content %}
+
+<!--<div class="info">
+  <h1 class="page-header">Alterar Cadastro do Monitor</h1>
+</div>-->
+
+<div class="row">
+  <h3>Deseja alterar a sua Senha?</h3>
+  <a href="{% url 'sahm:update_password' %}">Alterar</a>
+</div>
+
+<div class="row">
+  <h3>Deseja alterar o seu Email?</h3>
+  <a href="{% url 'sahm:update_email' %}">Alterar</a>
+</div>
+
+<div class="row">
+  <h3>Deseja Excluir sua Conta?</h3>
+  <a href="{% url 'sahm:excluir_conta' %}" onclick="return confirm('Tem certeza que deseja excluir esta conta?')">Excluir</a>
+</div>
+
+{% endblock %}
