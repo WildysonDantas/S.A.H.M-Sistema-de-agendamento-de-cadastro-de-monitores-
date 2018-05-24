@@ -1,42 +1,218 @@
 from django.test import TestCase
-from django.contrib.auth.models import User
-from django.test.client import Client
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 
-class CadastrarMonitorTest(TestCase):
+#browser = webdriver.Chrome(executable_path=r"/home/andre/PDSI/S.A.H.M-Sistema-de-agendamento-de-cadastro-de-monitores-/sahm/chromedriver")
+class MonitorTest(TestCase):
     def setUp(self):
-        self.client = Client()
-        self.user = User.objects.create(first_name='Paulo Henrique', username='20159022998', email='paulo@gmail.com', password='admin1')
+        self.browser = webdriver.Chrome(executable_path=r"/home/andre/PDSI/S.A.H.M-Sistema-de-agendamento-de-cadastro-de-monitores-/sahm/chromedriver")
 
-    def test_first_name_vazio(self):
-        self.user.first_name = ""
-        self.assertFalse(self.user.first_name)
+    def tearDown(self):
+        self.browser.quit()
 
-    def test_username_vazio(self):
-        self.assertNotEqual(self.user.username, "")
+    #TESTES REFERENTES A PAGINA DE CADASTRO
 
-    def test_email_vazio(self):
-        self.assertNotEqual(self.user.email, "")
+    def testeCadastroCompleto(self):
+        browser = self.browser
+        print("Teste de Cadastro Completo")
+        browser.get('http://127.0.0.1:8000/cadastro/')
+        elem = browser.find_element_by_id("id_nome")
+        elem.send_keys("Tecio Joaquim")
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("tacio@hotmail.com")
+        elem = browser.find_element_by_id("id_matricula")
+        elem.send_keys("20159022993")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("tecioo123")
+        elem = browser.find_element_by_id("id_conf_senha")
+        elem.send_keys("tecioo123")
+        elem.send_keys(Keys.RETURN)
+        assert "Conta" in browser.page_source
 
-    def test_password_vazio(self):
-        self.assertNotEqual(self.user.password, "")
+    def testeCadastroNomeVazio(self):
+        browser = self.browser
+        print("Teste de Cadastro Completo com Nome Vazio")
+        browser.get('http://127.0.0.1:8000/cadastro/')
+        elem = browser.find_element_by_id("id_nome")
+        elem.send_keys("")
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("renesiojoa@hotmail.com")
+        elem = browser.find_element_by_id("id_matricula")
+        elem.send_keys("201520451400")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("renesio123")
+        elem = browser.find_element_by_id("id_conf_senha")
+        elem.send_keys("renesio123")
+        elem.send_keys(Keys.RETURN)
+        assert "Cadastre" in browser.page_source
 
-    def test_username_com_menos_de_11_caracteres(self):
-        self.assertNotEqual(len(self.user.username) < 11, True)
+    def testeCadastroMatriculaVazio(self):
+        browser = self.browser
+        print("Teste de Cadastro Completo com Matricula Vazia")
+        browser.get('http://127.0.0.1:8000/cadastro/')
+        elem = browser.find_element_by_id("id_nome")
+        elem.send_keys("Renesio Joaquim")
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("renesiojoa@hotmail.com")
+        elem = browser.find_element_by_id("id_matricula")
+        elem.send_keys("")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("renesio123")
+        elem = browser.find_element_by_id("id_conf_senha")
+        elem.send_keys("renesio123")
+        elem.send_keys(Keys.RETURN)
+        assert "Cadastre" in browser.page_source
 
-    def test_password_com_menos_de_6_caracteres(self):
-        self.assertNotEqual(len(self.user.password) < 6, True)
+    def testeCadastroEmailVazio(self):
+        browser = self.browser
+        print("Teste de Cadastro Completo com Email Vazio")
+        browser.get('http://127.0.0.1:8000/cadastro/')
+        elem = browser.find_element_by_id("id_nome")
+        elem.send_keys("Renesio")
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("")
+        elem = browser.find_element_by_id("id_matricula")
+        elem.send_keys("201520451400")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("renesio123")
+        elem = browser.find_element_by_id("id_conf_senha")
+        elem.send_keys("renesio123")
+        elem.send_keys(Keys.RETURN)
+        assert "Cadastre" in browser.page_source
 
-    def test_email_sem_arroba(self):
-        self.assertNotEqual(self.user.email.count('@') == 0, True)
+    def testeCadastroSenhaVazio(self):
+        browser = self.browser
+        print("Teste de Cadastro Completo com Senha Vazio")
+        browser.get('http://127.0.0.1:8000/cadastro/')
+        elem = browser.find_element_by_id("id_nome")
+        elem.send_keys("Renesio")
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("renesiojoa@hotmail.com")
+        elem = browser.find_element_by_id("id_matricula")
+        elem.send_keys("201520451400")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("")
+        elem = browser.find_element_by_id("id_conf_senha")
+        elem.send_keys("renesio123")
+        elem.send_keys(Keys.RETURN)
+        assert "Cadastre" in browser.page_source
 
-    def test_email_sem_ponto_com(self):
-        self.assertNotEqual(self.user.email.count('.com') == 0, True)
+    def testeCadastroConfSenhaVazio(self):
+        browser = self.browser
+        print("Teste de Cadastro Completo com Confirmacao de Senha Vazio")
+        browser.get('http://127.0.0.1:8000/cadastro/')
+        elem = browser.find_element_by_id("id_nome")
+        elem.send_keys("")
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("renesiojoa@hotmail.com")
+        elem = browser.find_element_by_id("id_matricula")
+        elem.send_keys("201520451400")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("renesio123")
+        elem = browser.find_element_by_id("id_conf_senha")
+        elem.send_keys("")
+        elem.send_keys(Keys.RETURN)
+        assert "Cadastre" in browser.page_source
 
-    def test_cadastro_monitor(self):
-        response = self.client.get('/cadastro/')
-        self.assertEqual(response.status_code, 200)
+    def testeCadastroEmBranco(self):
+        browser = self.browser
+        print("Teste de Cadastro em Branco")
+        browser.get('http://127.0.0.1:8000/cadastro/')
+        elem = browser.find_element_by_id("id_nome")
+        elem.send_keys("")
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("")
+        elem = browser.find_element_by_id("id_matricula")
+        elem.send_keys("")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("")
+        elem = browser.find_element_by_id("id_conf_senha")
+        elem.send_keys("")
+        elem.send_keys(Keys.RETURN)
+        assert "Cadastre" in browser.page_source
 
-    """def test_cadastrar_monitor_sucesso(self):
-        data = {'first_name': 'Paulo', 'username': '20159024998', 'email': 'paulo@outlook.com', 'password': 'admin1234'}
-        response = self.client.post('/cadastro/', data)
-        self.assertNotEqual(data.first_name, "")"""
+    def testeCadastroSenhaNaoConfere(self):
+        browser = self.browser
+        print("Teste de Cadastro Completo com Senhas que nao Conferem")
+        browser.get('http://127.0.0.1:8000/cadastro/')
+        elem = browser.find_element_by_id("id_nome")
+        elem.send_keys("Renesio")
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("renesiojoa@hotmail.com")
+        elem = browser.find_element_by_id("id_matricula")
+        elem.send_keys("201520451400")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("renesio123")
+        elem = browser.find_element_by_id("id_conf_senha")
+        elem.send_keys("renesio1234")
+        elem.send_keys(Keys.RETURN)
+        assert "Cadastre" in browser.page_source
+
+    def testeCadastroEmailSemArroba(self):
+        browser = self.browser
+        print("Teste de Cadastro Completo com Email sem o '@'")
+        browser.get('http://127.0.0.1:8000/cadastro/')
+        elem = browser.find_element_by_id("id_nome")
+        elem.send_keys("André")
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("andrehotmail.com")
+        elem = browser.find_element_by_id("id_matricula")
+        elem.send_keys("20159022997")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("andre123")
+        elem = browser.find_element_by_id("id_conf_senha")
+        elem.send_keys("andre123")
+        elem.send_keys(Keys.RETURN)
+        assert "Cadastre" in browser.page_source
+
+    def testeCadastroEmailSemPontoCom(self):
+        browser = self.browser
+        print("Teste de Cadastro Completo com Email sem o '.com'")
+        browser.get('http://127.0.0.1:8000/cadastro/')
+        elem = browser.find_element_by_id("id_nome")
+        elem.send_keys("André")
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("andre@hotmail")
+        elem = browser.find_element_by_id("id_matricula")
+        elem.send_keys("20159022997")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("andre123")
+        elem = browser.find_element_by_id("id_conf_senha")
+        elem.send_keys("andre123")
+        elem.send_keys(Keys.RETURN)
+        assert "Cadastre" in browser.page_source
+
+    def testeCadastroComSenhaContendoMenosDe6Caracteres(self):
+        browser = self.browser
+        print("Teste de Cadastro Completo com senha contendo menos de 6 caracteres")
+        browser.get('http://127.0.0.1:8000/cadastro/')
+        elem = browser.find_element_by_id("id_nome")
+        elem.send_keys("André")
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("andre@hotmail.com")
+        elem = browser.find_element_by_id("id_matricula")
+        elem.send_keys("20159022997")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("andre")
+        elem = browser.find_element_by_id("id_conf_senha")
+        elem.send_keys("andre")
+        elem.send_keys(Keys.RETURN)
+        assert "Cadastre" in browser.page_source
+
+    def testeCadastroComMatriculaContendoMenosDe11Caracteres(self):
+        browser = self.browser
+        print("Teste de Cadastro Completo com a matricula contendo menos de 11 caracteres")
+        browser.get('http://127.0.0.1:8000/cadastro/')
+        elem = browser.find_element_by_id("id_nome")
+        elem.send_keys("André")
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("andre@hotmail.com")
+        elem = browser.find_element_by_id("id_matricula")
+        elem.send_keys("2015902299")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("andre123")
+        elem = browser.find_element_by_id("id_conf_senha")
+        elem.send_keys("andre123")
+        elem.send_keys(Keys.RETURN)
+        assert "Cadastre" in browser.page_source
+
