@@ -31,42 +31,57 @@ def contato(request):
 def cadastrar_monitor(request):
 
     form = UserModelForm(request.POST or None)
-    #form_monitor = MonitorModelForm(request.POST or None)
-    context = {'form':form}
     if request.method == "POST":
-        if form.is_valid():
-            try:
-                monitor_email = User.objects.get(email=request.POST.get('email'))
-                monitor_username = User.objects.get(username=request.POST.get('matricula'))
+        #form_monitor = MonitorModelForm(request.POST or None)
 
-                if monitor_email or monitor_username:
-                    return render(request, 'sahm/cadastroMonitor.html', {'msg': 'Matricula ou email já cadastrados'})
+        if form.is_valid():
+
+            try:
+                monitor_username = User.objects.get(username=request.POST.get('matricula'))
+                context = {
+                    'form':form,
+                    'msg_matricula': 'Matricula já cadastrada!'
+                }
+                return render(request, 'sahm/cadastroMonitor.html', context)
 
             except User.DoesNotExist:
+                monitor_email = User.objects.filter(email=request.POST.get('email')).count()
+                if monitor_email:
+                    context = {
+                        'form':form,
+                        'msg_email': 'Email já cadastrado!'
+                    }
+                    return render(request, 'sahm/cadastroMonitor.html', context)
+                else:
 
-                user = form.save(commit=False)
-                username = form.cleaned_data['username']
-                password = form.cleaned_data['password']
-                user.set_password(password)
+                    user = form.save(commit=False)
+                    username = form.cleaned_data['username']
+                    password = form.cleaned_data['password']
+                    user.set_password(password)
+                    user.save()
+                    return render(request, 'sahm/cadastroMonitor.html', {'form':form, 'msg_confirm':'Cadastro Realizado com Sucesso!'})
+    else:
+        form = UserModelForm()
 
-                user.save()
-                return redirect('/acesso', context)
-
+    context = {'form':form}
     return render(request, 'sahm/cadastroMonitor.html', context)
 
 def monitor_login(request):
 
     if request.method == "POST":
 
-        monitor_consulta = User.objects.get(email=request.POST.get('email'))
-        monitor = authenticate(username=monitor_consulta.username, password=request.POST.get('password'))
+        try:
+            monitor_consulta = User.objects.get(email=request.POST.get('email'))
+            monitor = authenticate(username=monitor_consulta.username, password=request.POST.get('password'))
 
-        if monitor is not None:
-            if monitor.is_active:
-                login(request, monitor)
-                return HttpResponseRedirect('/acesso', {'monitor':monitor_consulta})
-        else:
-            return HttpResponseRedirect('/login')
+            if monitor is not None:
+                if monitor.is_active:
+                    login(request, monitor)
+                    return HttpResponseRedirect('/acesso', {'monitor':monitor_consulta})
+            else:
+                return render(request, 'sahm/login.html', {'msg':'Senha Inválida !'})
+        except User.DoesNotExist:
+            return render(request, 'sahm/login.html', {'msg':'Monitor não Cadastrado !'})
 
     return render(request, 'sahm/login.html')
 

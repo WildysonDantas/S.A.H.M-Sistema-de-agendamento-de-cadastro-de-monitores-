@@ -19,14 +19,14 @@
       <label for="id_email" class="control-label">Email:</label>
       <!--<input type="email" name="email" id="id_email" class="form-control" data-error="Por favor, informe um e-mail correto." required/>-->
       {{form.email}}
-      <div class="help-block with-errors">{{msg}}</div>
+      <div class="help-block with-errors">{{msg_email}}</div>
     </div>
 
     <div class="form-group col-md-4">
       <label for="id_matricula" class="control-label">Matrícula:</label>
       <!--<input type="number" name="matricula" id="id_matricula" class="form-control" required/>-->
       {{form.username}}
-      <div class="help-block with-errors"></div>
+      <div class="help-block with-errors">{{msg_matricula}}</div>
     </div>
   </div>
 
@@ -44,7 +44,9 @@
       <div class="help-block with-errors"></div>
     </div>
   </div>
-
+  {% if msg_confirm %}
+    <h4>{{msg_confirm}}</h4>
+  {% endif%}
   <div class="row" id="actions">
     <button type="submit" class="btn btn-primary">Cadastrar</button>
     <a href="{% url 'sahm:login' %}" class="btn btn-default">Cancelar</a>
