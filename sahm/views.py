@@ -107,13 +107,13 @@ def dados_cadastrais_monitor(request):
 
                 if request.POST['nome'] != '':
                     user.first_name = request.POST['nome']
-                    context = {'form_monitor':form_monitor, 'user':user}
 
                 user.monitor.telefone = form_monitor.cleaned_data.get('telefone')
                 user.monitor.nascimento = form_monitor.cleaned_data.get('nascimento')
                 user.monitor.curso = form_monitor.cleaned_data.get('curso')
                 user.save()
-
+                context = {'form_monitor':form_monitor, 'user':user, 'msg':'Dados Alterados Com Sucesso!'}
+                return render(request, 'sahm/updateMonitor.html', context)
 
             else:
                 return redirect('/acesso')
@@ -171,10 +171,10 @@ def update_email(request):
         if user.check_password(request.POST['password']):
             user.email = request.POST['email']
             user.save()
+            context = {'user':user, 'msg':'Email Alterado com Sucesso !'}
             return render(request, 'sahm/updateEmail.html', context)
         else:
             return redirect('/acesso')
-
 
     return render(request, 'sahm/updateEmail.html', context)
 
