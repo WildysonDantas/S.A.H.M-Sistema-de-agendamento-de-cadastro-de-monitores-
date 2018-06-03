@@ -12,10 +12,11 @@ class UserModelForm(forms.ModelForm):
         fields = ('username', 'first_name', 'email', 'password')
         widgets = {
             'first_name':forms.TextInput(attrs={'name':'nome', 'placeholder':'Informe o seu nome completo','id':'id_nome', 'class':'form-control', 'required':True}),
-            'username':forms.TextInput(attrs={'type':'number', 'name':'matricula', 'id':'id_matricula', 'class':'form-control', 'data-maxlength':11, 'data-minlength': 11, 'required':True}),
+            'username':forms.TextInput(attrs={'type':'number', 'name':'matricula', 'id':'id_matricula', 'class':'form-control', 'data-maxlength': 11, 'data-minlength': 11, 'required':True}),
             'email':forms.EmailInput(attrs={'name':'email', 'id':'id_email', 'class':'form-control', 'data-error':'Por favor, informe um e-mail correto.', 'required':True}),
             'password':forms.PasswordInput(attrs={'name':'senha', 'id':'id_senha', 'class':'form-control', 'data-minlength':6, 'required':True}),
         }
+
 
 class MonitorModelForm(forms.ModelForm):
     class Meta:
