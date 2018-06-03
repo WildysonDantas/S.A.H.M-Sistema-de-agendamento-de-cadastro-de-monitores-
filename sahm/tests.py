@@ -215,4 +215,65 @@ class MonitorTest(TestCase):
         elem.send_keys("andre123")
         elem.send_keys(Keys.RETURN)
         assert "Cadastre" in browser.page_source
+		
+	#TESTES REFERENTES A PAGINA DE LOGINS
+
+    def test_Login(self):
+        browser = self.browser
+        print("Teste de Requisicao")
+        email= ["widl@gmail.com", "paulo@gmail.com","renesiojoa@hotmail.com"]
+        senha = ["opaopa", "paulo123","renesio123"]
+        browser.get('http://127.0.0.1:8000/login/')
+        for x in range(len(email)):
+            #assert "Google" in browser.title
+            elem = browser.find_element_by_id("id_login")
+            elem.send_keys(email[x])
+            elem = browser.find_element_by_id("id_senha")
+            elem.send_keys(senha[x])
+            elem.send_keys(Keys.RETURN)
+            assert "Conta" in browser.page_source
+            link = browser.find_element_by_link_text('Sair')
+            link.click()
+
+    def testeSenhaEmBranco(self):
+        browser = self.browser
+        print("Teste de Senha em branco")
+        email= ["widl@gmail.com"]
+        senha = [""]
+        browser.get('http://127.0.0.1:8000/login/')
+        for x in range(len(email)):
+            elem = browser.find_element_by_id("id_login")
+            elem.send_keys(email[x])
+            elem = browser.find_element_by_id("id_senha")
+            elem.send_keys(senha[x])
+            elem.send_keys(Keys.RETURN)
+            assert "S.A.H.M" in browser.title
+
+    def testeEmailEmBranco(self):
+        browser = self.browser
+        print("Teste de Email em branco")
+        email= [""]
+        senha = ["opaopa"]
+        browser.get('http://127.0.0.1:8000/login/')
+        for x in range(len(senha)):
+            elem = browser.find_element_by_id("id_login")
+            elem.send_keys(email[x])
+            elem = browser.find_element_by_id("id_senha")
+            elem.send_keys(senha[x])
+            elem.send_keys(Keys.RETURN)
+            assert "S.A.H.M" in browser.title
+
+    def testeEmailSenhaEmBranco(self):
+        browser = self.browser
+        print("Teste de Email e Senha em branco")
+        email= [""]
+        senha = [""]
+        browser.get('http://127.0.0.1:8000/login/')
+        elem = browser.find_element_by_id("id_login")
+        elem.send_keys(email[0])
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys(senha[0])
+        elem.send_keys(Keys.RETURN)
+        assert "S.A.H.M" in browser.title
+
 
