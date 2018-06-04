@@ -59,7 +59,7 @@ def cadastrar_monitor(request):
                     password = form.cleaned_data['password']
                     user.set_password(password)
                     user.save()
-                    return render(request, 'sahm/cadastroMonitor.html', {'form':form, 'msg_confirm':'Cadastro Realizado com Sucesso!'})
+                    return render(request, 'sahm/login.html')
     else:
         form = UserModelForm()
 

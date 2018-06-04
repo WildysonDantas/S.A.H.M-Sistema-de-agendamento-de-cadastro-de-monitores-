@@ -13,6 +13,7 @@ class Monitor(models.Model):
     #email = models.EmailField()
     telefone = models.BigIntegerField(null=True, blank=True)
     curso = models.CharField(max_length=200, null=True, blank=True)
+    materia =  models.CharField(max_length=200, null=True, blank=True)
     nascimento = models.DateField(null=True, blank=True)
     #senha = models.CharField(max_length=200)
 
@@ -27,3 +28,9 @@ def criar_monitor(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def salvar_monitor(sender, instance, **kwargs):
     instance.monitor.save()
+
+class Monitoria(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, unique=True)
+    dia = models.DateField(u'Dia da Monitoria', help_text=u'Dia da Monitoria')
+    hora_inicio = models.TimeField(u'Hora de Inicio', help_text=u'Hora de Inicio')
+    hora_termino = models.TimeField(u'Hora de Termino', help_text=u'Hora de Termino')
