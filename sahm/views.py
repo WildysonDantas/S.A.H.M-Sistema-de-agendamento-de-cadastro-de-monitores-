@@ -79,9 +79,9 @@ def monitor_login(request):
                     login(request, monitor)
                     return HttpResponseRedirect('/acesso', {'monitor':monitor_consulta})
             else:
-                return render(request, 'sahm/login.html', {'msg':'Senha Inválida !'})
+                return render(request, 'sahm/login.html', {'msg':'Senha inválida!'})
         except User.DoesNotExist:
-            return render(request, 'sahm/login.html', {'msg':'Monitor não Cadastrado !'})
+            return render(request, 'sahm/login.html', {'msg':'Conta inexistente!'})
 
     return render(request, 'sahm/login.html')
 
@@ -171,7 +171,7 @@ def update_email(request):
         if user.check_password(request.POST['password']):
             user.email = request.POST['email']
             user.save()
-            context = {'user':user, 'msg':'Email Alterado com Sucesso !'}
+            context = {'user':user, 'msg':'Email alterado com sucesso !'}
             return render(request, 'sahm/updateEmail.html', context)
         else:
             return redirect('/acesso')
