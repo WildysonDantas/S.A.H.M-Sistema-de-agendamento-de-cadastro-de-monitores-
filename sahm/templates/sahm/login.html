@@ -5,7 +5,7 @@
 {% block content %}
 
 <img src="{% static 'Imagens/images.png' %}"  alt="Logo De Identificacao">
-<h1 class="page-header">Informe Suas Credenciais</h1>
+<h1 class="page-header">Informe suas credenciais</h1>
 
 <form id="formLogin" data-toggle="validator" role="form" action="{% url 'sahm:login' %}" method="POST">{% csrf_token %}
   <div class="form-group">
@@ -31,7 +31,7 @@
 </form>
 
 <div class="row2">
-  <a href="{% url 'sahm:cadastrar_monitor' %}">Não sou cadastrado</a>
+  <a href="{% url 'sahm:cadastrar_monitor' %}">Não é cadastrado? Cadastre-se</a>
 </div>
 
 {% endblock %}
