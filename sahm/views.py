@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Monitor
 from .forms import UserModelForm
 from .forms import MonitorModelForm
+from .forms import MonitoriaModelForm
 #from .forms import EmailUpdateModelForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -59,7 +60,7 @@ def cadastrar_monitor(request):
                     password = form.cleaned_data['password']
                     user.set_password(password)
                     user.save()
-                    return render(request, 'sahm/cadastroMonitor.html', {'form':form, 'msg_confirm':'Cadastro Realizado com Sucesso!'})
+                    return render(request, 'sahm/login.html')
     else:
         form = UserModelForm()
 
@@ -79,9 +80,9 @@ def monitor_login(request):
                     login(request, monitor)
                     return HttpResponseRedirect('/acesso', {'monitor':monitor_consulta})
             else:
-                return render(request, 'sahm/login.html', {'msg':'Senha Inválida !'})
+                return render(request, 'sahm/login.html', {'msg':'Senha inválida!'})
         except User.DoesNotExist:
-            return render(request, 'sahm/login.html', {'msg':'Monitor não Cadastrado !'})
+            return render(request, 'sahm/login.html', {'msg':'Conta inexistente!'})
 
     return render(request, 'sahm/login.html')
 
@@ -92,13 +93,39 @@ def monitor_logout(request):
 
 @login_required
 def acesso_monitor(request):
-    return render(request, 'viewMonitor.html')
+
+    user = User.objects.get(username=request.user.username)
+    #form = MonitoriaModelForm(request.POST or None,  initial={'dia': user.monitoria.dia, 'sala':user.monitoria.sala,'hora_inicio': user.monitoria.hora_inicio, 'hora_termino':user.monitoria.hora_termino}, prefix="monitr")
+    form = MonitoriaModelForm(request.POST or None)
+
+    if user.monitor.materia:
+        if request.method == "POST":
+            if form.is_valid():
+                #user.monitoria.dia = form.cleaned_data.get('dia')
+                #user.monitoria.sala = form.cleaned_data.get('sala')
+                #user.monitoria.hora_inicio = form.cleaned_data.get('hora_inicio')
+                #user.monitoria.hora_termino = form.cleaned_data.get('hora_termino')
+                mon = form.save(commit=False)
+                mon.user = user
+                mon.save()
+
+
+                #user.save()
+                context = {'form':mon, 'msg2':'Monitoria Cadastrada com Sucesso!','user':user}
+                return render(request, 'sahm/monitoria.html', context)
+            else:
+                return redirect('/acesso')
+
+        else:
+            return render(request, 'sahm/monitoria.html', {'form':form})
+    else:
+        return render(request, 'sahm/monitoria.html', {'msg':'Para Prosseguir Informe a Matéria!', 'form':form})
 
 @login_required
 def dados_cadastrais_monitor(request):
 
     user = User.objects.get(username= request.user.username)
-    form_monitor = MonitorModelForm(request.POST or None, initial={'telefone': user.monitor.telefone, 'nascimento':user.monitor.nascimento,'curso': user.monitor.curso}, prefix="moni")
+    form_monitor = MonitorModelForm(request.POST or None, initial={'telefone': user.monitor.telefone, 'nascimento':user.monitor.nascimento,'curso': user.monitor.curso, 'materia':user.monitor.materia}, prefix="moni")
     context = {'form_monitor':form_monitor}
 
     if request.method == "POST":
@@ -111,6 +138,7 @@ def dados_cadastrais_monitor(request):
                 user.monitor.telefone = form_monitor.cleaned_data.get('telefone')
                 user.monitor.nascimento = form_monitor.cleaned_data.get('nascimento')
                 user.monitor.curso = form_monitor.cleaned_data.get('curso')
+                user.monitor.materia = form_monitor.cleaned_data.get('materia')
                 user.save()
                 context = {'form_monitor':form_monitor, 'user':user, 'msg':'Dados Alterados Com Sucesso!'}
                 return render(request, 'sahm/updateMonitor.html', context)
@@ -171,7 +199,7 @@ def update_email(request):
         if user.check_password(request.POST['password']):
             user.email = request.POST['email']
             user.save()
-            context = {'user':user, 'msg':'Email Alterado com Sucesso !'}
+            context = {'user':user, 'msg':'Email alterado com sucesso !'}
             return render(request, 'sahm/updateEmail.html', context)
         else:
             return redirect('/acesso')
