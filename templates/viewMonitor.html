@@ -11,6 +11,9 @@
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -79,6 +82,7 @@
                       Matricula: {{user.username}} </br>
                       Nome Completo: {{user.first_name}} <br>
                       Email: {{user.email}}</br>
+                      Materia: {{user.monitor.materia}}</br>
                       Telefone: {{user.monitor.telefone}}</br></br></br></br>
                       {% block content %}
                       {% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'viewMonitor.html' %}
+
+{% block content %}
+
+{% if msg %}
+  <h4>{{msg}}</h4>
+{% else %}
+<form class="form-horizontal" data-toggle="validator" role="form" method="POST" action="{% url 'sahm:acesso_monitor' %}">{% csrf_token %}
+    <fieldset>
+
+        <!-- Form Name -->
+        <legend>Adicionar Monitoria</legend>
+
+        <!-- Text input-->
+        <div class="row">
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="id_sala">Local:</label>
+              <div class="col-md-2">
+                  <!--<input id="sala_monitoria" name="sala" type="text" placeholder="Nº da Sala" class="form-control input-md" required="">-->
+                {{form.sala}}
+              </div>
+          </div>
+        </div>
+
+        <!-- Appended Input-->
+        <div class="row">
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="id_dia">Dia da Monitoria:</label>
+              <div class="col-md-4">
+                  <div class="input-group">
+                      <!--<input id="eventDate" name="eventDate" class="form-control" placeholder="DD/MM/YYYY" type="date" required="">-->
+                      {{form.dia}}
+                  </div>
+
+              </div>
+          </div>
+        </div>
+        <!-- Text input-->
+        <div class="row">
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="id_hora_inicio">Horário de Início:</label>
+              <div class="col-md-3">
+                  <!--<input id="id_hora_inicio" name="venueName" type="time" placeholder="" class="form-control input-md">-->
+                  {{form.hora_inicio}}
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="id_hora_termino">Horário de Término:</label>
+              <div class="col-md-3">
+                  <!--<input id="id_hora_termino" name="hora_termino" type="time"  class="form-control input-md">-->
+                  {{form.hora_termino}}
+              </div>
+          </div>
+        </div>
+
+        {% if msg2 %}
+          <h4> {{msg2}} </h4>
+        {% endif %}
+
+        <!-- Button (Double) -->
+        <div class="row">
+          <div class="form-group">
+              <label class="col-md-1 control-label" for="submitButton"></label>
+              <div class="col-md-8">
+                  <button id="submitButton" name="submitButton" class="btn btn-primary">Salvar Monitoria</button>
+                  <button id="cancelButton" name="cancelButton" class="btn btn-danger">Cancelar</button>
+              </div>
+          </div>
+        </div>
+    </fieldset>
+</form>
+{% endif %}
+{% endblock %}
