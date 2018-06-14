@@ -93,40 +93,55 @@ def monitor_logout(request):
 
 @login_required
 def acesso_monitor(request):
+    return render(request, 'viewMonitor.html')
+
+@login_required
+def cadastro_monitoria(request):
 
     user = User.objects.get(username=request.user.username)
     #form = MonitoriaModelForm(request.POST or None,  initial={'dia': user.monitoria.dia, 'sala':user.monitoria.sala,'hora_inicio': user.monitoria.hora_inicio, 'hora_termino':user.monitoria.hora_termino}, prefix="monitr")
     form = MonitoriaModelForm(request.POST or None)
 
-    if user.monitor.materia:
-        if request.method == "POST":
-            if form.is_valid():
-                #user.monitoria.dia = form.cleaned_data.get('dia')
-                #user.monitoria.sala = form.cleaned_data.get('sala')
-                #user.monitoria.hora_inicio = form.cleaned_data.get('hora_inicio')
-                #user.monitoria.hora_termino = form.cleaned_data.get('hora_termino')
-                mon = form.save(commit=False)
-                mon.user = user
-                mon.save()
+    try:
+        if user.monitor.materia:
+            if request.method == "POST":
+                if form.is_valid():
+                    #user.monitoria.dia = form.cleaned_data.get('dia')
+                    #user.monitoria.sala = form.cleaned_data.get('sala')
+                    #user.monitoria.hora_inicio = form.cleaned_data.get('hora_inicio')
+                    #user.monitoria.hora_termino = form.cleaned_data.get('hora_termino')
+                    monitoria = form.save(commit=False)
+                    monitoria.user = user
+                    monitoria.dia = form.cleaned_data.get('dia')
+                    monitoria.sala = form.cleaned_data.get('sala')
+                    monitoria.hora_inicio = form.cleaned_data.get('hora_inicio')
+                    monitoria.hora_termino = form.cleaned_data.get('hora_termino')
+                    monitoria.save()
 
+                    #user.save()
+                    context = {'form':monitoria, 'msg2':'Monitoria Cadastrada com Sucesso!','user':user}
+                    return render(request, 'sahm/monitoria.html', context)
+                else:
+                    return redirect('/acesso')
 
-                #user.save()
-                context = {'form':mon, 'msg2':'Monitoria Cadastrada com Sucesso!','user':user}
-                return render(request, 'sahm/monitoria.html', context)
             else:
-                return redirect('/acesso')
-
+                return render(request, 'sahm/monitoria.html', {'form':form})
         else:
-            return render(request, 'sahm/monitoria.html', {'form':form})
-    else:
+            return render(request, 'sahm/monitoria.html', {'msg':'Para Prosseguir Informe a Matéria!', 'form':form})
+    except User.monitor.RelatedObjectDoesNotExist:
         return render(request, 'sahm/monitoria.html', {'msg':'Para Prosseguir Informe a Matéria!', 'form':form})
 
 @login_required
 def dados_cadastrais_monitor(request):
 
     user = User.objects.get(username= request.user.username)
-    form_monitor = MonitorModelForm(request.POST or None, initial={'telefone': user.monitor.telefone, 'nascimento':user.monitor.nascimento,'curso': user.monitor.curso, 'materia':user.monitor.materia}, prefix="moni")
-    context = {'form_monitor':form_monitor}
+
+    try:
+
+        form_monitor = MonitorModelForm(request.POST or None, initial={'telefone': user.monitor.telefone, 'nascimento':user.monitor.nascimento,'curso': user.monitor.curso, 'materia':user.monitor.materia}, prefix="moni")
+
+    except User.monitor.RelatedObjectDoesNotExist:
+        form_monitor = MonitorModelForm(request.POST or None)
 
     if request.method == "POST":
         if form_monitor.is_valid():
@@ -135,12 +150,17 @@ def dados_cadastrais_monitor(request):
                 if request.POST['nome'] != '':
                     user.first_name = request.POST['nome']
 
-                user.monitor.telefone = form_monitor.cleaned_data.get('telefone')
-                user.monitor.nascimento = form_monitor.cleaned_data.get('nascimento')
-                user.monitor.curso = form_monitor.cleaned_data.get('curso')
-                user.monitor.materia = form_monitor.cleaned_data.get('materia')
-                user.save()
-                context = {'form_monitor':form_monitor, 'user':user, 'msg':'Dados Alterados Com Sucesso!'}
+                #monitor = form_monitor.save(commit=False)
+                ##user.monitor = monitor
+                #user.save()
+                monitor = form_monitor.save(commit=False)
+                monitor.user = user
+                monitor.telefone = form_monitor.cleaned_data.get('telefone')
+                monitor.nascimento = form_monitor.cleaned_data.get('nascimento')
+                monitor.curso = form_monitor.cleaned_data.get('curso')
+                monitor.materia = form_monitor.cleaned_data.get('materia')
+                monitor.save()
+                context = {'form_monitor':monitor, 'user':user, 'msg':'Dados Alterados Com Sucesso!'}
                 return render(request, 'sahm/updateMonitor.html', context)
 
             else:
@@ -148,8 +168,10 @@ def dados_cadastrais_monitor(request):
 
         else:
             return redirect('/acesso')
-
-    return render(request, 'sahm/updateMonitor.html', context)
+    else:
+        form_monitor = MonitorModelForm()
+        context = {'form_monitor':form_monitor, 'user':user}
+        return render(request, 'sahm/updateMonitor.html', context)
 
 @login_required
 def dados_principal_monitor(request):

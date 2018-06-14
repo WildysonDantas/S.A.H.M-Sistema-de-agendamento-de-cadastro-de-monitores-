@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^contate-nos/$', views.contato, name='contato'),
     url(r'^login/$', views.monitor_login, name='login'),
     url(r'^cadastro/$', views.cadastrar_monitor, name='cadastrar_monitor'),
+    url(r'^monitoria/$', views.cadastro_monitoria, name='cadastro_monitoria'),
     url(r'^acesso/$', views.acesso_monitor, name="acesso_monitor"),
     url(r'^logout/$', views.monitor_logout, name="logout"),
     url(r'^dados_cadastrais_monitor/$', views.dados_cadastrais_monitor, name='dados_cadastrais_monitor'),
