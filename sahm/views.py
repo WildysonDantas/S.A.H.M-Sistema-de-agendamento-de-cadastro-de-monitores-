@@ -119,7 +119,7 @@ def cadastro_monitoria(request):
                     monitoria.save()
 
                     #user.save()
-                    context = {'form':monitoria, 'msg2':'Monitoria Cadastrada com Sucesso!','user':user}
+                    context = {'form':monitoria, 'msg2':'Monitoria cadastrada com sucesso!','user':user}
                     return render(request, 'sahm/monitoria.html', context)
                 else:
                     return redirect('/acesso')
@@ -127,9 +127,9 @@ def cadastro_monitoria(request):
             else:
                 return render(request, 'sahm/monitoria.html', {'form':form})
         else:
-            return render(request, 'sahm/monitoria.html', {'msg':'Para Prosseguir Informe a Matéria!', 'form':form})
+            return render(request, 'sahm/monitoria.html', {'msg':'Para prosseguir informe a matéria!', 'form':form})
     except User.monitor.RelatedObjectDoesNotExist:
-        return render(request, 'sahm/monitoria.html', {'msg':'Para Prosseguir Informe a Matéria!', 'form':form})
+        return render(request, 'sahm/monitoria.html', {'msg':'Para prosseguir informe a matéria!', 'form':form})
 
 @login_required
 def dados_cadastrais_monitor(request):
@@ -160,7 +160,7 @@ def dados_cadastrais_monitor(request):
                 monitor.curso = form_monitor.cleaned_data.get('curso')
                 monitor.materia = form_monitor.cleaned_data.get('materia')
                 monitor.save()
-                context = {'form_monitor':monitor, 'user':user, 'msg':'Dados Alterados Com Sucesso!'}
+                context = {'form_monitor':monitor, 'user':user, 'msg':'Dados alterados com sucesso!'}
                 return render(request, 'sahm/updateMonitor.html', context)
 
             else:
