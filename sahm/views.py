@@ -220,13 +220,32 @@ def update_email(request):
     context = {'user':user}
 
     if request.method == "POST":
-        if user.check_password(request.POST['password']):
-            user.email = request.POST['email']
-            user.save()
-            context = {'user':user, 'msg':'Email alterado com sucesso !'}
-            return render(request, 'sahm/updateEmail.html', context)
+
+        email_novo = request.POST['email']
+
+        if email_novo:
+            check_email = User.objects.filter(email=email_novo).exists()
+
+            if check_email:
+                context = {'user':user, 'msg':'Email já cadastrado!'}
+                return render(request, 'sahm/updateEmail.html', context)
+
+        #Separando pelo @
+        email1, email2 = email_novo.split('@')
+
+        if '.com' in email2:
+
+            if user.check_password(request.POST['password']):
+                user.email = request.POST['email']
+                user.save()
+                context = {'user':user, 'msg':'Email alterado com sucesso !'}
+                return render(request, 'sahm/updateEmail.html', context)
+            else:
+                context = {'user':user, 'msg':'Senha Inválida!'}
+                return render(request, 'sahm/updateEmail.html', context)
         else:
-            return redirect('/acesso')
+            context = {'user':user, 'msg':'O Email Não Está no Formato Correto!'}
+            return render(request, 'sahm/updateEmail.html', context)
 
     return render(request, 'sahm/updateEmail.html', context)
 
