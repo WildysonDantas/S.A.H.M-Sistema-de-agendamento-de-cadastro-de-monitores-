@@ -136,14 +136,16 @@ def dados_cadastrais_monitor(request):
 
     user = User.objects.get(username= request.user.username)
 
-    try:
+    #try:
 
-        form_monitor = MonitorModelForm(request.POST or None, initial={'telefone': user.monitor.telefone, 'nascimento':user.monitor.nascimento,'curso': user.monitor.curso, 'materia':user.monitor.materia}, prefix="moni")
+        #form_monitor = MonitorModelForm(request.POST or None, initial={'telefone': user.monitor.telefone, 'nascimento':user.monitor.nascimento,'curso': user.monitor.curso, 'materia':user.monitor.materia}, prefix="moni")
 
-    except User.monitor.RelatedObjectDoesNotExist:
-        form_monitor = MonitorModelForm(request.POST or None)
+    #except User.monitor.RelatedObjectDoesNotExist:
+        #form_monitor = MonitorModelForm(request.POST or None)
 
     if request.method == "POST":
+        #form_monitor = MonitorModelForm(request.POST or None, initial={'telefone':user.monitor.telefone, 'nascimento':user.monitor.nascimento, 'curso': user.monitor.curso, 'materia':user.monitor.materia}, prefix="moni")
+        form_monitor = MonitorModelForm(request.POST or None, instance=user.monitor)
         if form_monitor.is_valid():
             if request.user.is_authenticated:
 
@@ -169,7 +171,7 @@ def dados_cadastrais_monitor(request):
         else:
             return redirect('/acesso')
     else:
-        form_monitor = MonitorModelForm()
+        form_monitor = MonitorModelForm(instance=user.monitor)
         context = {'form_monitor':form_monitor, 'user':user}
         return render(request, 'sahm/updateMonitor.html', context)
 
