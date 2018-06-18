@@ -320,35 +320,7 @@ class MonitorTest(TestCase):
 
 # FIM DOS TESTES REFERENTES A PAGINA DE CADASTRO
 
-# TESTES REFERENTES A PAGINA DE ATUALIZAÇÃO DE DADOS CADASTRAIS
-
-    def testeAtualizacaoDeDadosCadastrais(self):
-        browser = self.browser
-        print("Teste Completo de atualização dos dados cadastrais")
-        email = ["andrelukas91@hotmail.com"]
-        senha = ["andre12"]
-        browser.get('http://127.0.0.1:8000/login/')
-        elem = browser.find_element_by_id("id_login")
-        elem.send_keys(email)
-        elem = browser.find_element_by_id("id_senha")
-        elem.send_keys(senha)
-        elem.send_keys(Keys.RETURN)
-        link = browser.find_element_by_link_text('Atualizar Informações Cadastrais')
-        link.click()
-        elem = browser.find_element_by_id("id_nome")
-        elem.send_keys("André Lucas da Costa Soares")
-        elem = browser.find_element_by_id("id_fone")
-        elem.send_keys("8999924198")
-        elem = browser.find_element_by_id("id_nascimento")
-        elem.send_keys("18/09/1997")
-        #elem = browser.find_element_by_id("select_curso")
-        #elem.send_keys()
-        elem.send_keys(Keys.RETURN)
-        assert "Novo Nome" in browser.page_source
-
-    # FIM DOS TESTES REFERENTES A PAGINA DE ATUALIZAÇÃO DE DADOS CADASTRAIS
-
-    # TESTES REFERENTES A PAGINA DE LOGINS
+# TESTES REFERENTES A PAGINA DE LOGINS
 
     def test_Login(self):
         browser = self.browser
@@ -423,7 +395,7 @@ class MonitorTest(TestCase):
             elem.send_keys(Keys.RETURN)
             assert "S.A.H.M" in browser.title
 
-    def testeComSenhaContendoApenasEspacos(self):
+    def testeComSenhalContendoApenasEspacos(self):
         browser = self.browser
         print("Teste com senha contendo apenas espaços")
         email= ["widl@gmail.com"]
@@ -465,4 +437,262 @@ class MonitorTest(TestCase):
         assert "S.A.H.M" in browser.title
 
     # FIM DOS TESTES REFERENTES A PAGINA DE LOGINS
+
+    # TESTES REFERENTES A PÁGINA DE CONFIGURAÇÕES DO MONITOR
+
+    def testeEmailVazioNaAlteracaoDeEmail(self):
+        browser = self.browser
+        print("Teste de alteração de email com campo email vazio")
+        email = ["widl@gmail.com"]
+        senha = ["opaopa"]
+        browser.get('http://127.0.0.1:8000/login/')
+        elem = browser.find_element_by_id("id_login")
+        elem.send_keys(email)
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys(senha)
+        elem.send_keys(Keys.RETURN)
+        link = browser.find_element_by_link_text("Configurações de Monitor")
+        link.click()
+        link = browser.find_element_by_link_text("Alterar Email")
+        link.click()
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("opaopa")
+        elem.send_keys(Keys.RETURN)
+        assert "antigo" in browser.page_source
+
+    def testeAlteracaoEmailContendoApenasEspacos(self):
+        browser = self.browser
+        print("Teste de alteração de email com campo email contendo apenas espaços")
+        email = ["widl@gmail.com"]
+        senha = ["opaopa"]
+        browser.get('http://127.0.0.1:8000/login/')
+        elem = browser.find_element_by_id("id_login")
+        elem.send_keys(email)
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys(senha)
+        elem.send_keys(Keys.RETURN)
+        link = browser.find_element_by_link_text("Configurações de Monitor")
+        link.click()
+        link = browser.find_element_by_link_text("Alterar Email")
+        link.click()
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("                            ")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("opaopa")
+        elem.send_keys(Keys.RETURN)
+        assert "antigo" in browser.page_source
+
+    def testeAlteracaoEmailContendoNumeros(self):
+        browser = self.browser
+        print("Teste de alteração de email com campo email contendo numeros")
+        email = ["widl@gmail.com"]
+        senha = ["opaopa"]
+        browser.get('http://127.0.0.1:8000/login/')
+        elem = browser.find_element_by_id("id_login")
+        elem.send_keys(email)
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys(senha)
+        elem.send_keys(Keys.RETURN)
+        link = browser.find_element_by_link_text("Configurações de Monitor")
+        link.click()
+        link = browser.find_element_by_link_text("Alterar Email")
+        link.click()
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("123456789")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("opaopa")
+        elem.send_keys(Keys.RETURN)
+        assert "antigo" in browser.page_source
+
+    def testeAlteracaoEmailSemArroba(self):
+        browser = self.browser
+        print("Teste de alteração de email com campo email sem a @")
+        email = ["widl@gmail.com"]
+        senha = ["opaopa"]
+        browser.get('http://127.0.0.1:8000/login/')
+        elem = browser.find_element_by_id("id_login")
+        elem.send_keys(email)
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys(senha)
+        elem.send_keys(Keys.RETURN)
+        link = browser.find_element_by_link_text("Configurações de Monitor")
+        link.click()
+        link = browser.find_element_by_link_text("Alterar Email")
+        link.click()
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("wildysongmail.com")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("opaopa")
+        elem.send_keys(Keys.RETURN)
+        assert "antigo" in browser.page_source
+
+    def testeAlteracaoEmailComSenhaInvalida(self):
+        browser = self.browser
+        print("Teste de alteração de email com a senha inválida")
+        email = ["widl@gmail.com"]
+        senha = ["opaopa"]
+        browser.get('http://127.0.0.1:8000/login/')
+        elem = browser.find_element_by_id("id_login")
+        elem.send_keys(email)
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys(senha)
+        elem.send_keys(Keys.RETURN)
+        link = browser.find_element_by_link_text("Configurações de Monitor")
+        link.click()
+        link = browser.find_element_by_link_text("Alterar Email")
+        link.click()
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("wildyson@gmail.com")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("opaopa123")
+        elem.send_keys(Keys.RETURN)
+        assert "inválida" in browser.page_source
+
+    def testeAlteracaoEmailSemPontoCom(self):
+        browser = self.browser
+        print("Teste de alteração de email com campo email sem o .com")
+        email = ["widl@gmail.com"]
+        senha = ["opaopa"]
+        browser.get('http://127.0.0.1:8000/login/')
+        elem = browser.find_element_by_id("id_login")
+        elem.send_keys(email)
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys(senha)
+        elem.send_keys(Keys.RETURN)
+        link = browser.find_element_by_link_text("Configurações de Monitor")
+        link.click()
+        link = browser.find_element_by_link_text("Alterar Email")
+        link.click()
+        elem = browser.find_element_by_id("id_email")
+        elem.send_keys("wildyson@gmail")
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys("opaopa")
+        elem.send_keys(Keys.RETURN)
+        assert "formato" in browser.page_source
+
+    def testeExclusaoDoMonitor(self):
+        browser = self.browser
+        print("Teste de exclusão de conta de monitor")
+        email = ["tacio@hotmail.com"]
+        senha = ["tecioo123"]
+        browser.get('http://127.0.0.1:8000/login/')
+        elem = browser.find_element_by_id("id_login")
+        elem.send_keys(email)
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys(senha)
+        elem.send_keys(Keys.RETURN)
+        link = browser.find_element_by_link_text('Configurações de Monitor')
+        link.click()
+        link = browser.find_element_by_link_text('Excluir Conta')
+        link.click()
+        alert = browser.switch_to_alert()
+        alert.accept()
+        assert "credenciais" in browser.page_source
+
+    # TESTES REFERENTES A PÁGINA DE CONFIGURAÇÕES DO MONITOR
+
+    # TESTES REFERENTES A PAGINA DE ATUALIZAÇÃO DE DADOS CADASTRAIS
+
+    def testeAtualizacaoDeDadosCadastrais(self):
+        browser = self.browser
+        print("Teste Completo de atualização dos dados cadastrais")
+        email = ["renesiojoa@hotmail.com"]
+        senha = ["renesio123"]
+        browser.get('http://127.0.0.1:8000/login/')
+        elem = browser.find_element_by_id("id_login")
+        elem.send_keys(email)
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys(senha)
+        elem.send_keys(Keys.RETURN)
+        link = browser.find_element_by_link_text('Atualizar Informações Cadastrais')
+        link.click()
+        elem = browser.find_element_by_id("id_nome").clear()
+        elem = browser.find_element_by_id("id_nome")
+        elem.send_keys("Renesio Joaquim Oliveira")
+        elem = browser.find_element_by_id("id_fone").clear()
+        elem = browser.find_element_by_id("id_fone")
+        elem.send_keys("8999944999")
+        elem = browser.find_element_by_id("id_nascimento")
+        elem.send_keys("08/09/1998")
+        #elem = browser.find_element_by_id("select_curso")
+        #elem.send_keys('CSHNB - NUTRIÇÃO')
+        #elem.send_keys(Keys.ENTER)
+        elem = browser.find_element_by_id("id_materia").clear()
+        elem = browser.find_element_by_id("id_materia")
+        elem.send_keys("Ética")
+        elem.send_keys(Keys.RETURN)
+        assert "alterados" in browser.page_source
+
+    # FIM DOS TESTES REFERENTES A PAGINA DE ATUALIZAÇÃO DE DADOS CADASTRAIS
+
+    # TESTES REFERENTES A PÁGINA DE CADASTRO DE MONITORIAS
+
+    def testeCadastroMonitoriaSemInformarMateria(self):
+        browser = self.browser
+        print("Teste de cadastro de monitoria sem informar a matéria")
+        email = ["paulo@gmail.com"]
+        senha = ["paulo123"]
+        browser.get('http://127.0.0.1:8000/login/')
+        elem = browser.find_element_by_id("id_login")
+        elem.send_keys(email)
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys(senha)
+        elem.send_keys(Keys.RETURN)
+        link = browser.find_element_by_link_text('Monitorias')
+        link.click()
+        assert "prosseguir" in browser.page_source
+
+    def testeCadastroDeMonitoria(self):
+        browser = self.browser
+        print("Teste completo de cadastro de monitoria")
+        email = ["andrelukas91@hotmail.com"]
+        senha = ["andre12"]
+        browser.get('http://127.0.0.1:8000/login/')
+        elem = browser.find_element_by_id("id_login")
+        elem.send_keys(email)
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys(senha)
+        elem.send_keys(Keys.RETURN)
+        link = browser.find_element_by_link_text('Monitorias')
+        link.click()
+        elem = browser.find_element_by_id("id_sala")
+        elem.send_keys("809")
+        elem = browser.find_element_by_id("id_dia")
+        elem.send_keys("20/09/2018")
+        elem = browser.find_element_by_id("id_hora_inicio")
+        elem.send_keys("08:00")
+        elem = browser.find_element_by_id("id_hora_termino")
+        elem.send_keys("10:00")
+        elem.send_keys(Keys.RETURN)
+        assert "cadastrada" in browser.page_source
+
+
+
+    def testeCadastroDeMonitoriaComUmaDataPassada(self):
+        browser = self.browser
+        print("Teste completo de cadastro de monitoria com uma data que já passou")
+        email = ["andrelukas91@hotmail.com"]
+        senha = ["andre12"]
+        browser.get('http://127.0.0.1:8000/login/')
+        elem = browser.find_element_by_id("id_login")
+        elem.send_keys(email)
+        elem = browser.find_element_by_id("id_senha")
+        elem.send_keys(senha)
+        elem.send_keys(Keys.RETURN)
+        link = browser.find_element_by_link_text('Monitorias')
+        link.click()
+        elem = browser.find_element_by_id("id_sala")
+        elem.send_keys("809")
+        elem = browser.find_element_by_id("id_dia")
+        elem.send_keys("01/01/2000")
+        elem = browser.find_element_by_id("id_hora_inicio")
+        elem.send_keys("08:00")
+        elem = browser.find_element_by_id("id_hora_termino")
+        elem.send_keys("10:00")
+        elem.send_keys(Keys.RETURN)
+        assert "inválida" in browser.page_source
+
+    # FIM DOS TESTES REFERENTES A PÁGINA DE CADASTRO DE MONITORIAS
 

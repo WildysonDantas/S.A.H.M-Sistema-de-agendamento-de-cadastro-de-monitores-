@@ -2,14 +2,15 @@
 
 {% block content %}
 
+<div class="info">
+  <h2 class="page-header">Cadastrar Monitorias</h2>
+</div>
+
 {% if msg %}
   <h4>{{msg}}</h4>
 {% else %}
 <form class="form-horizontal" data-toggle="validator" role="form" method="POST" action="{% url 'sahm:acesso_monitor' %}">{% csrf_token %}
     <fieldset>
-
-        <!-- Form Name -->
-        <legend>Adicionar Monitoria</legend>
 
         <!-- Text input-->
         <div class="row">
@@ -18,6 +19,7 @@
               <div class="col-md-2">
                   <!--<input id="sala_monitoria" name="sala" type="text" placeholder="Nº da Sala" class="form-control input-md" required="">-->
                 {{form.sala}}
+                <div class="help-block with-errors"></div>
               </div>
           </div>
         </div>
@@ -30,6 +32,7 @@
                   <div class="input-group">
                       <!--<input id="eventDate" name="eventDate" class="form-control" placeholder="DD/MM/YYYY" type="date" required="">-->
                       {{form.dia}}
+                      <div class="help-block with-errors"></div>
                   </div>
 
               </div>
@@ -42,6 +45,7 @@
               <div class="col-md-3">
                   <!--<input id="id_hora_inicio" name="venueName" type="time" placeholder="" class="form-control input-md">-->
                   {{form.hora_inicio}}
+                  <div class="help-block with-errors"></div>
               </div>
           </div>
         </div>
@@ -52,6 +56,7 @@
               <div class="col-md-3">
                   <!--<input id="id_hora_termino" name="hora_termino" type="time"  class="form-control input-md">-->
                   {{form.hora_termino}}
+                  <div class="help-block with-errors"></div>
               </div>
           </div>
         </div>
@@ -60,16 +65,20 @@
           <h4> {{msg2}} </h4>
         {% endif %}
 
+        {% if msgOk %}
+          <h4>{{msgOk}}</h4>
+        {% else %}
         <!-- Button (Double) -->
-        <div class="row">
-          <div class="form-group">
-              <label class="col-md-1 control-label" for="submitButton"></label>
-              <div class="col-md-8">
-                  <button id="submitButton" name="submitButton" class="btn btn-primary">Salvar Monitoria</button>
-                  <button id="cancelButton" name="cancelButton" class="btn btn-danger">Cancelar</button>
-              </div>
+          <div class="row">
+            <div class="form-group">
+                <label class="col-md-1 control-label" for="submitButton"></label>
+                <div class="col-md-8">
+                    <button id="submitButton" name="submitButton" class="btn btn-primary">Salvar Monitoria</button>
+                    <a href="{% url 'sahm:acesso_monitor' %}" class="btn btn-default">Cancelar</a>
+                </div>
+            </div>
           </div>
-        </div>
+        {% endif %}
     </fieldset>
 </form>
 {% endif %}
