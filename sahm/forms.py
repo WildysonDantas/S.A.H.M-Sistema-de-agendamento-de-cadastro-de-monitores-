@@ -23,7 +23,7 @@ class MonitorModelForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(MonitorModelForm, self).__init__(*args, **kwargs)
-        self.fields['telefone'].initial = self.instance.telefone
+        #self.fields['telefone'].initial = self.instance.telefone
 
 
     class Meta:
