@@ -528,7 +528,7 @@ class MonitorTest(TestCase):
         elem.send_keys(Keys.RETURN)
         assert "antigo" in browser.page_source
 
-    """def testeAlteracaoEmailComSenhaInvalida(self):
+    def testeAlteracaoEmailComSenhaInvalida(self):
         browser = self.browser
         print("Teste de alteração de email com a senha inválida")
         email = ["widl@gmail.com"]
@@ -548,7 +548,7 @@ class MonitorTest(TestCase):
         elem = browser.find_element_by_id("id_senha")
         elem.send_keys("opaopa123")
         elem.send_keys(Keys.RETURN)
-        assert "antigo" in browser.page_source
+        assert "inválida" in browser.page_source
 
     def testeAlteracaoEmailSemPontoCom(self):
         browser = self.browser
@@ -570,7 +570,7 @@ class MonitorTest(TestCase):
         elem = browser.find_element_by_id("id_senha")
         elem.send_keys("opaopa")
         elem.send_keys(Keys.RETURN)
-        assert "antigo" in browser.page_source"""
+        assert "formato" in browser.page_source
 
     def testeExclusaoDoMonitor(self):
         browser = self.browser
@@ -594,7 +594,7 @@ class MonitorTest(TestCase):
     # TESTES REFERENTES A PÁGINA DE CONFIGURAÇÕES DO MONITOR
 
     # TESTES REFERENTES A PAGINA DE ATUALIZAÇÃO DE DADOS CADASTRAIS
-    """
+
     def testeAtualizacaoDeDadosCadastrais(self):
         browser = self.browser
         print("Teste Completo de atualização dos dados cadastrais")
@@ -608,19 +608,22 @@ class MonitorTest(TestCase):
         elem.send_keys(Keys.RETURN)
         link = browser.find_element_by_link_text('Atualizar Informações Cadastrais')
         link.click()
+        elem = browser.find_element_by_id("id_nome").clear()
         elem = browser.find_element_by_id("id_nome")
         elem.send_keys("Renesio Joaquim Oliveira")
+        elem = browser.find_element_by_id("id_fone").clear()
         elem = browser.find_element_by_id("id_fone")
-        elem.send_keys("8999999999")
+        elem.send_keys("8999944999")
         elem = browser.find_element_by_id("id_nascimento")
-        elem.send_keys("01/09/1996")
-        elem = browser.find_element_by_id("select_curso")
-        elem.send_keys('CSHNB - SISTEMAS DE INFORMAÇÃO')
-        elem.send_keys(Keys.ENTER)
+        elem.send_keys("08/09/1998")
+        #elem = browser.find_element_by_id("select_curso")
+        #elem.send_keys('CSHNB - NUTRIÇÃO')
+        #elem.send_keys(Keys.ENTER)
+        elem = browser.find_element_by_id("id_materia").clear()
         elem = browser.find_element_by_id("id_materia")
-        elem.send_keys("Estruturas de Dados")
+        elem.send_keys("Ética")
         elem.send_keys(Keys.RETURN)
-        assert "alterados" in browser.page_source"""
+        assert "alterados" in browser.page_source
 
     # FIM DOS TESTES REFERENTES A PAGINA DE ATUALIZAÇÃO DE DADOS CADASTRAIS
 
@@ -637,7 +640,7 @@ class MonitorTest(TestCase):
         elem = browser.find_element_by_id("id_senha")
         elem.send_keys(senha)
         elem.send_keys(Keys.RETURN)
-        link = browser.find_element_by_link_text('Cadastrar Monitoria')
+        link = browser.find_element_by_link_text('Monitorias')
         link.click()
         assert "prosseguir" in browser.page_source
 
@@ -652,7 +655,7 @@ class MonitorTest(TestCase):
         elem = browser.find_element_by_id("id_senha")
         elem.send_keys(senha)
         elem.send_keys(Keys.RETURN)
-        link = browser.find_element_by_link_text('Cadastrar Monitoria')
+        link = browser.find_element_by_link_text('Monitorias')
         link.click()
         elem = browser.find_element_by_id("id_sala")
         elem.send_keys("809")
@@ -665,9 +668,11 @@ class MonitorTest(TestCase):
         elem.send_keys(Keys.RETURN)
         assert "cadastrada" in browser.page_source
 
-    """def testeCadastroDeMonitoriaComCamposVazios(self):
+
+
+    def testeCadastroDeMonitoriaComUmaDataPassada(self):
         browser = self.browser
-        print("Teste de cadastro de monitoria com campos vazios")
+        print("Teste completo de cadastro de monitoria com uma data que já passou")
         email = ["andrelukas91@hotmail.com"]
         senha = ["andre12"]
         browser.get('http://127.0.0.1:8000/login/')
@@ -676,17 +681,18 @@ class MonitorTest(TestCase):
         elem = browser.find_element_by_id("id_senha")
         elem.send_keys(senha)
         elem.send_keys(Keys.RETURN)
-        link = browser.find_element_by_link_text('Cadastrar Monitoria')
+        link = browser.find_element_by_link_text('Monitorias')
         link.click()
         elem = browser.find_element_by_id("id_sala")
-        elem.send_keys("")
+        elem.send_keys("809")
         elem = browser.find_element_by_id("id_dia")
-        elem.send_keys("")
+        elem.send_keys("01/01/2000")
         elem = browser.find_element_by_id("id_hora_inicio")
-        elem.send_keys("")
+        elem.send_keys("08:00")
         elem = browser.find_element_by_id("id_hora_termino")
-        elem.send_keys("")
+        elem.send_keys("10:00")
         elem.send_keys(Keys.RETURN)
-        assert "cadastrada" in browser.page_source"""
+        assert "inválida" in browser.page_source
 
     # FIM DOS TESTES REFERENTES A PÁGINA DE CADASTRO DE MONITORIAS
+

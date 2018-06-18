@@ -119,21 +119,21 @@ def cadastro_monitoria(request):
                     now = date.today()
                     data = datetime.strptime(str(dia_cad), "%Y-%m-%d").date()
                     tempo = datetime.strptime(str(hora_inicio_cad), "%H:%M:%S").time()
-
+                    
                     if data < now or data.year > now.year:
                         return render(request, 'sahm/monitoria.html', {'msg2':'Informe uma Data no Tempo Certo!', 'form':form})
 
                     check_sala = Monitoria.objects.filter(sala=sala_cad, dia=dia_cad, hora_inicio=hora_inicio_cad)
 
                     if check_sala.exists():
-                        return render(request, 'sahm/monitoria.html', {'msg2':'Monitoria Já Cadastrada Nesse Horário!', 'form':form})
+                        return render(request, 'sahm/monitoria.html', {'msg2':'Monitoria Já cadastrada nesse horário!', 'form':form})
 
                     try:
                         check_horario = Monitoria.objects.get(sala=sala_cad, dia=dia_cad)
 
                         if check_horario:
                             if tempo >= check_horario.hora_inicio and tempo < check_horario.hora_termino:
-                                return render(request, 'sahm/monitoria.html', {'msg2':'Monitoria Já Cadastrada Nesse Intervalo!', 'form':form})
+                                return render(request, 'sahm/monitoria.html', {'msg2':'Monitoria Já cadastrada nesse intervalo!', 'form':form})
 
                     except Monitoria.DoesNotExist:
                         monitoria = form.save(commit=False)
@@ -156,7 +156,7 @@ def cadastro_monitoria(request):
                     context = {'form':monitoria, 'msgOk':'Monitoria cadastrada com sucesso!','user':user}
                     return render(request, 'sahm/monitoria.html', context)
                 else:
-                    return render(request, 'sahm/monitoria.html', {'msg2':'Os Horários Estão Incorretos','form':form})
+                    return render(request, 'sahm/monitoria.html', {'msg2':'Os horários estão incorretos!','form':form})
 
             else:
                 form = MonitoriaModelForm()
@@ -276,10 +276,10 @@ def update_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            messages.success(request, 'Senha Alterada com Sucesso!')
+            messages.success(request, 'Senha alterada com sucesso!')
             return redirect('/dados_principal_monitor')
         else:
-            messages.error(request, 'Por Favor Corrija o Erro Abaixo.')
+            messages.error(request, 'Por favor corrija o erro abaixo.')
             return redirect('/mudar_senha')
 
     else:
@@ -314,10 +314,10 @@ def update_email(request):
                 context = {'user':user, 'msg':'Email alterado com sucesso !'}
                 return render(request, 'sahm/updateEmail.html', context)
             else:
-                context = {'user':user, 'msg':'Senha Inválida!'}
+                context = {'user':user, 'msg':'Senha inválida!'}
                 return render(request, 'sahm/updateEmail.html', context)
         else:
-            context = {'user':user, 'msg':'O Email Não Está no Formato Correto!'}
+            context = {'user':user, 'msg':'O email informado não está no formato correto!'}
             return render(request, 'sahm/updateEmail.html', context)
 
     return render(request, 'sahm/updateEmail.html', context)
