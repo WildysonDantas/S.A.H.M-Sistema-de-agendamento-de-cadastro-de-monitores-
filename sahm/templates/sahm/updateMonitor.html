@@ -77,11 +77,11 @@
 
 {% if msg %}
   <h4>{{msg}}</h4>
-{% endif %}
-
+{% else %}
   <div class="row" id="actions">
     <button type="submit" class="btn btn-primary">Alterar</button>
     <a href="{% url 'sahm:acesso_monitor' %}" class="btn btn-default">Cancelar</a>
   </div>
 </form>
+{% endif %}
 {% endblock %}

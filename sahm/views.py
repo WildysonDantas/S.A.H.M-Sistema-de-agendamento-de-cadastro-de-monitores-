@@ -120,8 +120,8 @@ def cadastro_monitoria(request):
                     data = datetime.strptime(str(dia_cad), "%Y-%m-%d").date()
                     tempo = datetime.strptime(str(hora_inicio_cad), "%H:%M:%S").time()
 
-                    if data < now:
-                        return render(request, 'sahm/monitoria.html', {'msg2':'Não Cadastre um Dia Anterior!', 'form':form})
+                    if data < now or data.year > now.year:
+                        return render(request, 'sahm/monitoria.html', {'msg2':'Informe uma Data no Tempo Certo!', 'form':form})
 
                     check_sala = Monitoria.objects.filter(sala=sala_cad, dia=dia_cad, hora_inicio=hora_inicio_cad)
 
@@ -153,7 +153,7 @@ def cadastro_monitoria(request):
                     monitoria.save()
 
                     #user.save()
-                    context = {'form':monitoria, 'msg2':'Monitoria cadastrada com sucesso!','user':user}
+                    context = {'form':monitoria, 'msgOk':'Monitoria cadastrada com sucesso!','user':user}
                     return render(request, 'sahm/monitoria.html', context)
                 else:
                     return render(request, 'sahm/monitoria.html', {'msg2':'Os Horários Estão Incorretos','form':form})
@@ -244,7 +244,7 @@ def dados_cadastrais_monitor(request):
             else:
                 return redirect('/acesso')
         else:
-            form_monitor = MonitorModelForm(instance=user)
+            form_monitor = MonitorModelForm(instance=monitor)
             context = {'form_monitor':form_monitor, 'user':user}
             return render(request, 'sahm/updateMonitor.html', context)
 
@@ -329,3 +329,7 @@ def excluir_conta(request):
     messages.success(request, "The user is deleted")
     logout(request)
     return render(request, 'sahm/login.html', {})
+
+@login_required
+def feed_monitoria(request):
+    return render(request, 'sahm/feedMonitoria.html')
