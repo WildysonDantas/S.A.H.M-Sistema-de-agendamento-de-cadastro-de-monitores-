@@ -2,6 +2,10 @@
 
 {% block content %}
 
+<div class="info">
+  <h2 class="page-header">Atualizar as Informações do Monitor</h2>
+</div>
+
 <!--<div class="info">
   <h1 class="page-header">Alterar Cadastro do Monitor</h1>
 </div>-->
@@ -36,7 +40,31 @@
     <div class="form-group col-md-5">
         <label  for="id_curso" class="control-label">Curso:</label>
       <!--  <input type="text" name="curso" id="id_curso" class="form-control" required/>-->
-        {{form_monitor.curso}}
+
+          {% if user.monitor.curso == '1' %}
+            <h4>CSHNB - ADMINISTRAÇÃO</h4>
+          {% elif user.monitor.curso == '2' %}
+            <h4>CSHNB - CIÊNCIAS BIOLÓGICAS</h4>
+          {% elif user.monitor.curso == '3' %}
+            <h4>CSHNB - ENFERMAGEM</h4>
+          {% elif user.monitor.curso == '4' %}
+            <h4>CSHNB - HISTÓRIA</h4>
+          {% elif user.monitor.curso == '5' %}
+            <h4>CSHNB - LETRAS</h4>
+          {% elif user.monitor.curso == '6' %}
+            <h4>CSHNB - MATEMÁTICA</h4>
+          {% elif user.monitor.curso == '7' %}
+            <h4>CSHNB - MEDICINA</h4>
+          {% elif user.monitor.curso == '8' %}
+            <h4>CSHNB - NUTRIÇÃO</h4>
+          {% elif user.monitor.curso == '9' %}
+            <h4>CSHNB - PEDAGOGIA</h4>
+          {% elif user.monitor.curso == '10' %}
+            <h4>CSHNB - SISTEMAS DE INFORMAÇÃO</h4>
+          {% else %}
+              {{form_monitor.curso}}
+          {% endif%}
+
         <div class="help-block with-errors"></div>
     </div>
 

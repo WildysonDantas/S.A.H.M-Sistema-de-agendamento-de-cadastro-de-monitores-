@@ -2,6 +2,9 @@
 
 {% block content %}
 
+<div class="info">
+  <h3 class="page-header">Atualize seu Novo Email</h3>
+</div>
 
 <form id="formUpdatePass" data-toggle="validator" role="form" method="POST" action="{% url 'sahm:update_email' %}">{% csrf_token %}
 

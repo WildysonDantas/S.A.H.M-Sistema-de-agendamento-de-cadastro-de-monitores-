@@ -55,10 +55,10 @@ class Monitoria(models.Model):
         if self.hora_termino <= self.hora_inicio:
             raise ValidationError('Tempo de término menor que o Tempo de inicio.')
 
-        events = Monitoria.objects.filter(dia=self.dia)
-        if events.exists():
-            if self.check_overlap(event.hora_inicio, event.hora_termino, self.hora_inicio, self.hora_termino):
-                raise ValidationError('There is an overlap with another event: ' + str(event.dia) + ', ' + str(event.hora_inicio) + '-' + str(event.hora_termino))
+        #events = Monitoria.objects.filter(dia=self.dia)
+        #if events.exists():
+            #if self.check_overlap(events.hora_inicio, events.hora_termino, self.hora_inicio, self.hora_termino):
+                #raise ValidationError('There is an overlap with another event: ' + str(events.dia) + ', ' + str(events.hora_inicio) + '-' + str(events.hora_termino))
 
     def __str__(self):
         return str(self.user)

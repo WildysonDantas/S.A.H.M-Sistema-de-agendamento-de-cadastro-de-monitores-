@@ -2,14 +2,15 @@
 
 {% block content %}
 
+<div class="info">
+  <h2 class="page-header">Monitorias Cadastradas</h2>
+</div>
+
 {% if msg %}
   <h4>{{msg}}</h4>
 {% else %}
 <form class="form-horizontal" data-toggle="validator" role="form" method="POST" action="{% url 'sahm:acesso_monitor' %}">{% csrf_token %}
     <fieldset>
-
-        <!-- Form Name -->
-        <legend>Adicionar Monitoria</legend>
 
         <!-- Text input-->
         <div class="row">
@@ -66,7 +67,7 @@
               <label class="col-md-1 control-label" for="submitButton"></label>
               <div class="col-md-8">
                   <button id="submitButton" name="submitButton" class="btn btn-primary">Salvar Monitoria</button>
-                  <button id="cancelButton" name="cancelButton" class="btn btn-danger">Cancelar</button>
+                  <a href="{% url 'sahm:acesso_monitor' %}" class="btn btn-default">Cancelar</a>
               </div>
           </div>
         </div>

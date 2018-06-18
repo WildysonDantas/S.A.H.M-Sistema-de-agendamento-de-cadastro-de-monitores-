@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Monitor
+from .models import Monitoria
 from .forms import UserModelForm
 from .forms import MonitorModelForm
 from .forms import MonitoriaModelForm
@@ -12,6 +13,9 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
+from datetime import date
+from datetime import datetime
+
 #from django.contrib.auth.hashers
 
 
@@ -100,16 +104,41 @@ def cadastro_monitoria(request):
 
     user = User.objects.get(username=request.user.username)
     #form = MonitoriaModelForm(request.POST or None,  initial={'dia': user.monitoria.dia, 'sala':user.monitoria.sala,'hora_inicio': user.monitoria.hora_inicio, 'hora_termino':user.monitoria.hora_termino}, prefix="monitr")
-    form = MonitoriaModelForm(request.POST or None)
 
     try:
         if user.monitor.materia:
             if request.method == "POST":
+                form = MonitoriaModelForm(request.POST or None)
                 if form.is_valid():
-                    #user.monitoria.dia = form.cleaned_data.get('dia')
-                    #user.monitoria.sala = form.cleaned_data.get('sala')
-                    #user.monitoria.hora_inicio = form.cleaned_data.get('hora_inicio')
-                    #user.monitoria.hora_termino = form.cleaned_data.get('hora_termino')
+
+                    sala_cad = form.cleaned_data.get('sala')
+                    dia_cad = form.cleaned_data.get('dia')
+                    hora_inicio_cad = form.cleaned_data.get('hora_inicio')
+                    hora_termino_cad = form.cleaned_data.get('hora_termino')
+
+                    now = date.today()
+                    data = datetime.strptime(str(dia_cad), "%Y-%m-%d").date()
+                    tempo = datetime.strptime(str(hora_inicio_cad), "%H:%M:%S").time()
+
+                    check_sala = Monitoria.objects.filter(sala=sala_cad, dia=dia_cad, hora_inicio=hora_inicio_cad)
+                    check_horario = Monitoria.objects.get(sala=sala_cad, dia=dia_cad)
+
+                    if check_sala.exists():
+                        return render(request, 'sahm/monitoria.html', {'msg2':'Monitoria Já Cadastrada Nesse Horário!', 'form':form})
+
+                    if check_horario:
+                        if tempo >= check_horario.hora_inicio and tempo < check_horario.hora_termino:
+                            return render(request, 'sahm/monitoria.html', {'msg2':'Monitoria Já Cadastrada Nesse Intervalo!', 'form':form})
+
+                    #check_dia = Monitoria.objects.filter(dia=dia_cad).exists()
+                    #check_hora_inicio = Monitoria.objects.filter(hora_inicio=hora_inicio_cad).exists()
+
+                    if data < now:
+                        return render(request, 'sahm/monitoria.html', {'msg2':'Não Cadastre um Dia Anterior!', 'form':form})
+                    #if hora_inicio_cad >= hora_termino_cad:
+                        #form = MonitoriaModelForm
+                        #return render(request, 'sahm/monitoria.html', {'msg2':'Os Horários São Inválidos!', 'form':form})
+
                     monitoria = form.save(commit=False)
                     monitoria.user = user
                     monitoria.dia = form.cleaned_data.get('dia')
@@ -122,14 +151,15 @@ def cadastro_monitoria(request):
                     context = {'form':monitoria, 'msg2':'Monitoria cadastrada com sucesso!','user':user}
                     return render(request, 'sahm/monitoria.html', context)
                 else:
-                    return redirect('/acesso')
+                    return render(request, 'sahm/monitoria.html', {'msg2':'Os Horários Estão Incorretos','form':form})
 
             else:
+                form = MonitoriaModelForm()
                 return render(request, 'sahm/monitoria.html', {'form':form})
         else:
-            return render(request, 'sahm/monitoria.html', {'msg':'Para prosseguir informe a matéria!', 'form':form})
+            return render(request, 'sahm/monitoria.html', {'msg':'Para prosseguir informe a matéria!'})
     except User.monitor.RelatedObjectDoesNotExist:
-        return render(request, 'sahm/monitoria.html', {'msg':'Para prosseguir informe a matéria!', 'form':form})
+        return render(request, 'sahm/monitoria.html', {'msg':'Para prosseguir informe a matéria!'})
 
 @login_required
 def dados_cadastrais_monitor(request):
@@ -203,10 +233,10 @@ def update_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            messages.success(request, 'Your password was successfully updated!')
+            messages.success(request, 'Senha Alterada com Sucesso!')
             return redirect('/dados_principal_monitor')
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, 'Por Favor Corrija o Erro Abaixo.')
             return redirect('/mudar_senha')
 
     else:

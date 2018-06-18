@@ -53,9 +53,7 @@
         <div class="row">
           <div role="main">
             <div class="container-fluid">
-              <div class="info">
-                <h1 class="page-header">Área da Sua Conta</h1>
-              </div>
+
 
               <div class="row">
 
@@ -65,7 +63,7 @@
                       <ul class="nav">
                         <li><img src="{% static 'Imagens/images.png' %}"  alt="Logo Da Conta"/></li>
                         <li><a href="{% url 'sahm:acesso_monitor' %}">Inicio</a></li>
-                        <li><a href="{% url 'sahm:cadastro_monitoria' %}">Cadastrar Monitoria</a></li>
+                        <li><a href="{% url 'sahm:cadastro_monitoria' %}">Monitorias</a></li>
                         <li><a href="{% url 'sahm:dados_cadastrais_monitor' %}">Atualizar Informações Cadastrais</a></li>
                         <li><a href="{% url 'sahm:dados_principal_monitor' %}">Configurações de Monitor</a></li>
                         <li><a href="{% url 'sahm:logout' %}">Sair</a></li>
@@ -78,14 +76,7 @@
 
                   <form id="formCad" data-toggle="validator" role="form" method="POST">
                     {% csrf_token %}
-                    <!--<input type="file" name="anexo">-->
-                      <!--{{ user.get_username }}-->
-                      Matricula: {{user.username}} </br>
-                      Nome Completo: {{user.first_name}} <br>
-                      Email: {{user.email}}</br>
-                      Materia: {{user.monitor.materia}}</br>
-                      Telefone: {{user.monitor.telefone}}</br>
-                      Sala: {{user.monitoria.sala}}</br></br></br>
+
                       {% block content %}
                       {% endblock %}
                   </form>
